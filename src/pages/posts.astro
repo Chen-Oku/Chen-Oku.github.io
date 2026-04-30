@@ -83,12 +83,13 @@ const postsData = JSON.stringify(allPosts);
           const postsContainer = document.getElementById("posts-container");
           if (!postsContainer) return;
 
+          // Keep cards stacked on small screens and side-by-side on md+
           postsContainer.innerHTML = postsToShow
             .map(
               (post) => `
             <a href="${post.href}">
               <div
-                class="relative border border-transparent border-dashed cursor-pointer p-7 group rounded-2xl"
+                class="relative border border-transparent border-dashed cursor-pointer p-4 sm:p-7 group rounded-2xl"
               >
                 <div
                   class="absolute inset-0 z-20 w-full h-full duration-300 ease-out bg-white dark:bg-neutral-950 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700 group-hover:-translate-x-1 group-hover:-translate-y-1"
@@ -105,7 +106,7 @@ const postsData = JSON.stringify(allPosts);
                 <div
                   class="relative z-30 duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1"
                 >
-                  <div class="flex gap-8">
+                  <div class="flex flex-col md:flex-row gap-5 md:gap-8">
                     <div class="flex-[2]">
                       <h2 class="relative mb-4 pr-6">
                         <span
@@ -174,9 +175,7 @@ const postsData = JSON.stringify(allPosts);
                         </span>
                       </div>
                     </div>
-                    <div
-                      class="relative flex-1 h-48 rounded-xl overflow-hidden flex-shrink-0"
-                    >
+                    <div class="relative w-full md:flex-1 h-48 md:h-44 rounded-xl overflow-hidden flex-shrink-0">
                       <img
                         src="${post.image}"
                         alt="${post.title}"
@@ -205,7 +204,7 @@ const postsData = JSON.stringify(allPosts);
           }
 
           let paginationHTML =
-            '<div class="flex justify-center items-center gap-2 mt-8">';
+            '<div class="flex flex-wrap justify-center items-center gap-2 mt-8">';
 
           if (currentPage > 1) {
             paginationHTML += `
@@ -368,7 +367,7 @@ const postsData = JSON.stringify(allPosts);
 
     <main class="flex-1 relative z-10">
       <Navigation />
-      <section class="relative z-20 w-[896px] mx-auto mt-24">
+      <section class="relative z-20 w-full max-w-[896px] mx-auto mt-16 sm:mt-24 px-4 sm:px-6 lg:px-0">
         <div class="flex justify-between items-center mb-12">
           <h2
             class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-3xl lg:text-4xl"

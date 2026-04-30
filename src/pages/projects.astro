@@ -141,7 +141,7 @@ const visibleGithubRepos = githubRepos
 
     <main class="flex-1 relative z-10">
       <Navigation />
-      <section class="relative z-20 max-w-4xl mx-auto mt-32 mb-12 px-7 lg:px-0">
+      <section class="relative z-20 max-w-4xl mx-auto mt-20 sm:mt-32 mb-12 px-4 sm:px-7 lg:px-0">
         <div class="relative z-20 w-full mx-auto lg:mx-0">
           <h2
             class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-3xl lg:text-4xl"
@@ -165,7 +165,7 @@ const visibleGithubRepos = githubRepos
               allProjects.map((project) => (
                 <a
                   href={project.href}
-                  class="relative flex flex-col items-stretch duration-300 ease-out p-7 sm:p-3 group rounded-2xl"
+                  class="relative flex flex-col items-stretch duration-300 ease-out p-4 sm:p-3 md:p-7 group rounded-2xl"
                 >
                   <span class="absolute inset-0 z-20 block w-full h-full duration-300 ease-out bg-transparent border border-transparent border-dashed group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:border group-hover:border-neutral-300 dark:group-hover:border-neutral-600 group-hover:border-dashed rounded-2xl group-hover:bg-white dark:group-hover:bg-neutral-950" />
                   <span class="absolute inset-0 z-10 block w-full h-full duration-300 ease-out border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-600 group-hover:translate-x-1 group-hover:translate-y-1" />
@@ -214,7 +214,7 @@ const visibleGithubRepos = githubRepos
                           </g>
                         </svg>
                       </span>
-                      <span class="text-sm text-neutral-600 dark:text-neutral-400 block truncate">
+                      <span class="text-sm text-neutral-600 dark:text-neutral-400 block line-clamp-2">
                         {project.description}
                       </span>
                     </span>
@@ -240,7 +240,7 @@ const visibleGithubRepos = githubRepos
                       href={repo.htmlUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="relative flex flex-col items-stretch duration-300 ease-out p-5 group rounded-2xl"
+                      class="relative flex flex-col items-stretch duration-300 ease-out p-4 sm:p-5 group rounded-2xl"
                     >
                       <span class="absolute inset-0 z-20 block w-full h-full duration-300 ease-out bg-transparent border border-transparent border-dashed group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:border group-hover:border-neutral-300 dark:group-hover:border-neutral-600 group-hover:border-dashed rounded-2xl group-hover:bg-white dark:group-hover:bg-neutral-950" />
                       <span class="absolute inset-0 z-10 block w-full h-full duration-300 ease-out border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-600 group-hover:translate-x-1 group-hover:translate-y-1" />
@@ -269,7 +269,7 @@ const visibleGithubRepos = githubRepos
                             </p>
                           )
                         }
-                        <div class="mt-4 flex items-center gap-3 text-xs text-neutral-500 dark:text-neutral-400">
+                        <div class="mt-4 flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-neutral-500 dark:text-neutral-400">
                           {repo.language && <span>{repo.language}</span>}
                           {repo.language && <span>•</span>}
                           <span>

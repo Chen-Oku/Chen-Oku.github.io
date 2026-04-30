@@ -134,7 +134,7 @@ const { frontmatter, Content } = project;
     <main class="flex-1 relative z-10">
       <Navigation />
 
-      <article class="relative z-20 w-[896px] max-w-full mx-auto mt-24 mb-12 px-7 lg:px-0">
+      <article class="relative z-20 w-full max-w-[896px] mx-auto mt-16 sm:mt-24 mb-12 px-4 sm:px-7 lg:px-0">
         <a href="/projects/" class="inline-flex items-center text-sm text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 mb-6">
           ← Back to projects
         </a>
@@ -162,7 +162,7 @@ const { frontmatter, Content } = project;
           )
         }
 
-        <div class="flex gap-3 mb-10">
+        <div class="flex flex-wrap gap-3 mb-10">
           {
             frontmatter.demoUrl && (
               <a href={frontmatter.demoUrl} target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-sm font-medium text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200">
