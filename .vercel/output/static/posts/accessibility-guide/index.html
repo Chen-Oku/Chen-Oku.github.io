@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-gysqo7gh> <head><meta charset="utf-8"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v5.16.3"><title>Web Accessibility: A Comprehensive Guide - Your Portfolio</title><meta name="description" content="Make your web applications accessible to all users"><script>
+      (function () {
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const initialTheme =
+          savedTheme === "system"
+            ? prefersDark
+              ? "dark"
+              : "light"
+            : savedTheme;
+
+        if (initialTheme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script><script type="module">document.addEventListener("DOMContentLoaded",function(){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",e=>{localStorage.getItem("theme")==="system"&&(e.matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark"))});const t=document.querySelector(".prose");if(t){const e=t.querySelector("h1");e&&e.remove()}});</script><link rel="stylesheet" href="/_astro/about.CAE1JynX.css">
+<style>html,body{margin:0;padding:0;height:100%;overflow-x:hidden}body{display:flex;flex-direction:column;min-height:100vh}main[data-astro-cid-gysqo7gh]{flex:1}section[data-astro-cid-gysqo7gh][class*=text-gray-700]{margin:0;padding:0;flex-shrink:0}.prose[data-astro-cid-gysqo7gh] h1[data-astro-cid-gysqo7gh]:first-of-type,.prose[data-astro-cid-gysqo7gh]>h1[data-astro-cid-gysqo7gh]:first-child,article[data-astro-cid-gysqo7gh] .prose[data-astro-cid-gysqo7gh] h1[data-astro-cid-gysqo7gh]:first-child{display:none!important}.dot-hexagon-light[data-astro-cid-gysqo7gh]{background-image:radial-gradient(circle,#80808045 1px,transparent 1px),radial-gradient(circle,#80808045 1px,transparent 1px);background-size:24px 41.57px;background-position:0 0,12px 20.78px}.dot-hexagon-dark[data-astro-cid-gysqo7gh]{background-image:radial-gradient(circle,#ffffff35 1px,transparent 1px),radial-gradient(circle,#ffffff35 1px,transparent 1px);background-size:24px 41.57px;background-position:0 0,12px 20.78px}
+</style></head> <body class="bg-white dark:bg-neutral-900 transition-colors duration-300" data-astro-cid-gysqo7gh> <div class="fixed inset-0 z-0 pointer-events-none" data-astro-cid-gysqo7gh> <div class="absolute inset-0 -z-10 dot-hexagon-light dark:dot-hexagon-dark" data-astro-cid-gysqo7gh></div> <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_0%,rgba(255,255,255,0.5)_60%,rgba(255,255,255,0.9)_85%,white_100%)] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_0%,rgba(23,23,23,0.5)_60%,rgba(23,23,23,0.9)_85%,rgb(23,23,23)_100%)] -z-10" data-astro-cid-gysqo7gh></div> <div class="absolute left-0 right-0 top-0 -z-10 m-auto h-[1200px] w-[1200px] rounded-full bg-neutral-400 opacity-10 blur-[100px]" data-astro-cid-gysqo7gh></div> </div> <main class="flex-1 relative z-10" data-astro-cid-gysqo7gh> <!-- Navigation Bar Component --><nav class="relative z-50"> <div class="container mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex items-center justify-between h-16"> <a href="/" class="text-xl font-bold text-neutral-700 hover:text-neutral-400 dark:text-neutral-300 dark:hover:text-neutral-100 transition-colors">
+Your Portfolio
+</a> <div class="flex items-center space-x-6"> <a href="/" class="text-neutral-600 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">Home</a> <a href="/posts/" class="text-neutral-600 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">Posts</a> <a href="/projects/" class="text-neutral-600 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">Projects</a> <a href="/about/" class="text-neutral-600 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">About</a> <button id="theme-toggle" class="p-2 rounded-full text-neutral-600 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors" title="Toggle theme"> <svg class="w-5 h-5 theme-icon-light hidden" fill="currentColor" viewBox="0 0 20 20"> <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path> </svg> <svg class="w-5 h-5 theme-icon-dark hidden" fill="currentColor" viewBox="0 0 20 20"> <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path> </svg> </button> </div> </div> </div> </nav> <script type="module">document.addEventListener("DOMContentLoaded",function(){const t=document.getElementById("theme-toggle"),n=t.querySelector(".theme-icon-light"),c=t.querySelector(".theme-icon-dark");function o(e){e?(n.classList.add("hidden"),c.classList.remove("hidden")):(n.classList.remove("hidden"),c.classList.add("hidden"))}const s=document.documentElement.classList.contains("dark");o(s),t.addEventListener("click",function(){const e=document.documentElement.classList.contains("dark"),d=e?"light":"dark";document.documentElement.classList.toggle("dark"),o(!e),localStorage.setItem("theme",d)})});</script> <article class="relative z-20 w-[896px] mx-auto mt-24 mb-12 px-7 lg:px-0" data-astro-cid-gysqo7gh> <header class="text-center" data-astro-cid-gysqo7gh> <h1 class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-3xl lg:text-4xl mb-1.5" data-astro-cid-gysqo7gh> Web Accessibility: A Comprehensive Guide </h1> <div class="flex items-center justify-center gap-4 text-sm text-neutral-600 dark:text-neutral-400 mb-1.5" data-astro-cid-gysqo7gh> <time datetime="2024-04-02" data-astro-cid-gysqo7gh> April 1, 2024 </time> <span data-astro-cid-gysqo7gh>•</span> <span data-astro-cid-gysqo7gh>8 min read</span> </div> </header> <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-16 text-center" data-astro-cid-gysqo7gh> Make your web applications accessible to all users </p> <div class="prose prose-neutral dark:prose-invert max-w-none" data-astro-cid-gysqo7gh> <h1 id="web-accessibility-a-comprehensive-guide">Web Accessibility: A Comprehensive Guide</h1>
+<p>Web accessibility ensures that websites and applications can be used by everyone, including people with disabilities. It’s not just the right thing to do—it’s also required by law in many jurisdictions.</p>
+<h2 id="why-accessibility-matters">Why Accessibility Matters</h2>
+<ul>
+<li>Legal compliance (ADA, WCAG)</li>
+<li>Broader user base</li>
+<li>Better SEO</li>
+<li>Improved UX for all users</li>
+</ul>
+<h2 id="wcag-guidelines">WCAG Guidelines</h2>
+<p>The Web Content Accessibility Guidelines (WCAG) define four principles:</p>
+<h3 id="1-perceivable">1. Perceivable</h3>
+<p>Information must be presentable to users in ways they can perceive:</p>
+<ul>
+<li>Alt text for images</li>
+<li>Captions for videos</li>
+<li>Sufficient color contrast</li>
+</ul>
+<h3 id="2-operable">2. Operable</h3>
+<p>Interface components must be operable:</p>
+<ul>
+<li>Keyboard navigation</li>
+<li>No seizure-inducing content</li>
+<li>Adequate time limits</li>
+</ul>
+<h3 id="3-understandable">3. Understandable</h3>
+<p>Information and UI operation must be understandable:</p>
+<ul>
+<li>Readable text</li>
+<li>Predictable functionality</li>
+<li>Input assistance</li>
+</ul>
+<h3 id="4-robust">4. Robust</h3>
+<p>Content must be robust enough for assistive technologies:</p>
+<ul>
+<li>Valid HTML</li>
+<li>Proper semantic markup</li>
+<li>ARIA attributes when needed</li>
+</ul>
+<h2 id="common-practices">Common Practices</h2>
+<h3 id="semantic-html">Semantic HTML</h3>
+<p>Use proper HTML elements:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="html"><code><span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">nav</span><span style="color:#E1E4E8">> for navigation</span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">main</span><span style="color:#E1E4E8">> for main content</span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">article</span><span style="color:#E1E4E8">> for articles</span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">> for buttons (not div)</span></span></code></pre>
+<h3 id="aria-attributes">ARIA Attributes</h3>
+<p>Use ARIA when HTML isn’t sufficient:</p>
+<ul>
+<li><code>aria-label</code>: Descriptive label</li>
+<li><code>aria-labelledby</code>: Reference to labeling element</li>
+<li><code>aria-hidden</code>: Hide decorative elements</li>
+</ul>
+<h3 id="keyboard-navigation">Keyboard Navigation</h3>
+<p>Ensure all functionality is keyboard accessible:</p>
+<ul>
+<li>Tab order makes sense</li>
+<li>Focus indicators are visible</li>
+<li>Skip links for navigation</li>
+</ul>
+<h3 id="color-contrast">Color Contrast</h3>
+<p>Maintain sufficient contrast ratios:</p>
+<ul>
+<li>Normal text: 4.5:1</li>
+<li>Large text: 3:1</li>
+<li>UI components: 3:1</li>
+</ul>
+<h2 id="testing-tools">Testing Tools</h2>
+<ul>
+<li>WAVE browser extension</li>
+<li>axe DevTools</li>
+<li>Lighthouse accessibility audit</li>
+<li>Screen readers (NVDA, JAWS, VoiceOver)</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Accessibility should be built into your development process from the start. It benefits everyone and creates a more inclusive web.</p> </div> </article> </main> <!-- Footer Component --><section class="relative text-gray-700"> <div class="container flex flex-col items-center justify-center min-h-[40px] mx-auto px-7 max-w-7xl sm:flex-row sm:min-h-[50px] bg-transparent py-4"> <a class="h-5 text-base group relative z-30 flex items-center space-x-1.5 text-neutral-700 dark:text-neutral-300 font-semibold" href="/"> <span class="text-xl -translate-y-0.5 group-hover:-rotate-12 group-hover:scale-[1.2] ease-in-out duration-300">✦</span> <span class="-translate-y-0.5">Your Name</span> </a> <p class="mt-2 text-sm text-neutral-700 dark:text-neutral-300 sm:ml-4 sm:pl-4 sm:border-l sm:border-neutral-700 dark:sm:border-neutral-300 sm:mt-0">
+© 2025 Your Name. All rights reserved.
+</p> <span class="inline-flex justify-center mt-2 space-x-5 sm:ml-auto sm:mt-0 sm:justify-start"> <a href="https://x.com/astrodotbuild" target="_blank" class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-400 dark:hover:text-neutral-300"> <span class="sr-only">𝕏</span> <svg class="w-5 h-5" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M95 50c0 24.853-20.147 45-45 45S5 74.853 5 50 25.147 5 50 5s45 20.147 45 45Zm-51.21 2.688-21.51-28.76h16.578l14.1 18.855 17.453-18.855h4.872L55.135 45.694l22.72 30.377H61.279L45.967 55.598l-18.95 20.473h-4.873L43.79 52.688Zm-6.73-25.172h-7.616l33.63 44.967h7.616L37.06 27.516Z" fill="currentColor"></path> </svg> </a> <a href="https://github.com/tomcomtang/astro-multiplepage-portfolio" target="_blank" class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-400 dark:hover:text-neutral-300"> <span class="sr-only">GitHub</span> <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.12 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path> </svg> </a> <a href="mailto:364786053@qq.com" class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-400 dark:hover:text-neutral-300"> <span class="sr-only">Email</span> <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path> </svg> </a> </span> </div> </section> </body></html>

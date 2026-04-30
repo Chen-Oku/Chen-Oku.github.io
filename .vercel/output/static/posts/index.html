@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-at4y73ej> <head><meta charset="utf-8"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v5.16.3"><title>Blog Posts - Your Portfolio</title><meta name="description" content="Read my latest blog posts and articles"><script>
+      (function () {
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const initialTheme =
+          savedTheme === "system"
+            ? prefersDark
+              ? "dark"
+              : "light"
+            : savedTheme;
+
+        if (initialTheme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script><script type="module">document.addEventListener("DOMContentLoaded",function(){window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",e=>{localStorage.getItem("theme")==="system"&&(e.matches?document.documentElement.classList.add("dark"):document.documentElement.classList.remove("dark"))})});</script><script>(function(){const postsData = "[{\"title\":\"State Management Patterns in Frontend Applications\",\"description\":\"Explore different approaches to managing application state effectively\",\"date\":\"2024-04-03\",\"readTime\":\"6 min read\",\"image\":\"/assets/images/posts/post2.jpg\",\"slug\":\"state-management\",\"href\":\"/posts/state-management\"},{\"title\":\"Web Accessibility: A Comprehensive Guide\",\"description\":\"Make your web applications accessible to all users\",\"date\":\"2024-04-02\",\"readTime\":\"8 min read\",\"image\":\"/assets/images/posts/post1.jpg\",\"slug\":\"accessibility-guide\",\"href\":\"/posts/accessibility-guide\"},{\"title\":\"CI/CD Pipeline Setup and Best Practices\",\"description\":\"Streamline your development workflow with continuous integration and deployment\",\"date\":\"2024-04-01\",\"readTime\":\"7 min read\",\"image\":\"/assets/images/posts/post3.jpg\",\"slug\":\"devops-cicd\",\"href\":\"/posts/devops-cicd\"},{\"title\":\"Database Design Principles and Patterns\",\"description\":\"Learn fundamental database design principles for scalable applications\",\"date\":\"2024-03-30\",\"readTime\":\"10 min read\",\"image\":\"/assets/images/posts/post2.jpg\",\"slug\":\"database-design\",\"href\":\"/posts/database-design\"},{\"title\":\"Testing Strategies for Modern Web Applications\",\"description\":\"Comprehensive guide to testing approaches and best practices\",\"date\":\"2024-03-29\",\"readTime\":\"9 min read\",\"image\":\"/assets/images/posts/post1.jpg\",\"slug\":\"testing-strategies\",\"href\":\"/posts/testing-strategies\"},{\"title\":\"Effective Git Workflow Strategies\",\"description\":\"Master Git workflows and collaboration patterns for team development\",\"date\":\"2024-03-28\",\"readTime\":\"5 min read\",\"image\":\"/assets/images/posts/post3.jpg\",\"slug\":\"git-workflow\",\"href\":\"/posts/git-workflow\"},{\"title\":\"API Security Best Practices\",\"description\":\"Essential security practices for building secure REST and GraphQL APIs\",\"date\":\"2024-03-27\",\"readTime\":\"8 min read\",\"image\":\"/assets/images/posts/post2.jpg\",\"slug\":\"api-security\",\"href\":\"/posts/api-security\"},{\"title\":\"Modern CSS Techniques and Best Practices\",\"description\":\"Explore cutting-edge CSS features and modern styling approaches\",\"date\":\"2024-03-26\",\"readTime\":\"6 min read\",\"image\":\"/assets/images/posts/post1.jpg\",\"slug\":\"css-modern-techniques\",\"href\":\"/posts/css-modern-techniques\"},{\"title\":\"Optimizing React Application Performance\",\"description\":\"Practical techniques to improve React application performance and user experience\",\"date\":\"2024-03-25\",\"readTime\":\"9 min read\",\"image\":\"/assets/images/posts/post3.jpg\",\"slug\":\"react-performance\",\"href\":\"/posts/react-performance\"},{\"title\":\"TypeScript Best Practices for Modern Development\",\"description\":\"Essential TypeScript patterns and practices every developer should know\",\"date\":\"2024-03-24\",\"readTime\":\"7 min read\",\"image\":\"/assets/images/posts/post1.jpg\",\"slug\":\"typescript-best-practices\",\"href\":\"/posts/typescript-best-practices\"},{\"title\":\"Building Microservices with Node.js\",\"description\":\"A practical guide to building scalable microservices using Node.js\",\"date\":\"2024-03-23\",\"readTime\":\"10 min read\",\"image\":\"/assets/images/posts/post2.jpg\",\"slug\":\"nodejs-microservices\",\"href\":\"/posts/nodejs-microservices\"},{\"title\":\"Designing GraphQL APIs\",\"description\":\"Best practices for designing and implementing GraphQL APIs\",\"date\":\"2024-03-22\",\"readTime\":\"6 min read\",\"image\":\"/assets/images/posts/post3.jpg\",\"slug\":\"graphql-api\",\"href\":\"/posts/graphql-api\"},{\"title\":\"Getting Started with Next.js 14\",\"description\":\"A comprehensive guide to building modern web applications with Next.js 14\",\"date\":\"2024-03-21\",\"readTime\":\"8 min read\",\"image\":\"/assets/images/posts/post2.jpg\",\"slug\":\"getting-started-with-nextjs\",\"href\":\"/posts/getting-started-with-nextjs\"},{\"title\":\"Docker Basics for Developers\",\"description\":\"Learn the fundamentals of Docker and containerization\",\"date\":\"2024-03-20\",\"readTime\":\"5 min read\",\"image\":\"/assets/images/posts/post1.jpg\",\"slug\":\"docker-basics\",\"href\":\"/posts/docker-basics\"}]";
+const POSTS_PER_PAGE = 5;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const allPosts = JSON.parse(postsData);
+        const postsPerPage = POSTS_PER_PAGE;
+        const totalPosts = allPosts.length;
+        const totalPages = Math.ceil(totalPosts / postsPerPage);
+
+        function getCurrentPage() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const page = urlParams.get("page");
+          return page ? parseInt(page, 10) : 1;
+        }
+
+        function getPageUrl(page) {
+          if (page === 1) {
+            return "/posts/";
+          }
+          return `/posts/?page=${page}`;
+        }
+
+        function renderPosts(page) {
+          const currentPage = Math.max(1, Math.min(page, totalPages));
+          const startIndex = (currentPage - 1) * postsPerPage;
+          const endIndex = startIndex + postsPerPage;
+          const postsToShow = allPosts.slice(startIndex, endIndex);
+
+          const postsContainer = document.getElementById("posts-container");
+          if (!postsContainer) return;
+
+          postsContainer.innerHTML = postsToShow
+            .map(
+              (post) => `
+            <a href="${post.href}">
+              <div
+                class="relative border border-transparent border-dashed cursor-pointer p-7 group rounded-2xl"
+              >
+                <div
+                  class="absolute inset-0 z-20 w-full h-full duration-300 ease-out bg-white dark:bg-neutral-950 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700 group-hover:-translate-x-1 group-hover:-translate-y-1"
+                >
+                  <div
+                    class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] dark:bg-[radial-gradient(#404040_1px,transparent_1px)] opacity-50"
+                  >
+                  </div>
+                </div>
+                <div
+                  class="absolute inset-0 z-10 w-full h-full duration-300 ease-out border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700 group-hover:translate-x-1 group-hover:translate-y-1"
+                >
+                </div>
+                <div
+                  class="relative z-30 duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1"
+                >
+                  <div class="flex gap-8">
+                    <div class="flex-[2]">
+                      <h2 class="relative mb-4 pr-6">
+                        <span
+                          class="text-lg font-bold leading-tight tracking-tight sm:text-xl lg:text-2xl text-neutral-900 dark:text-neutral-100"
+                        >
+                          ${post.title}
+                        </span>
+                        <svg
+                          class="absolute top-[0.2rem] sm:top-[0.25rem] lg:top-[0.3rem] right-0 group-hover:translate-x-0 flex-shrink-0 -translate-x-1 w-4 h-4 stroke-current transition-all ease-in-out duration-200 transform opacity-0 group-hover:opacity-100 text-neutral-600 dark:text-neutral-400"
+                          viewBox="0 0 13 15"
+                        >
+                          <g
+                            stroke="none"
+                            stroke-width="1"
+                            fill="none"
+                            fill-rule="evenodd"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          >
+                            <g
+                              transform="translate(0.666667, 2.333333)"
+                              stroke="currentColor"
+                              stroke-width="2.4"
+                            >
+                              <g>
+                                <polyline
+                                  class="transition-all duration-200 ease-out opacity-0 delay-0 group-hover:opacity-100"
+                                  points="5.33333333 0 10.8333333 5.5 5.33333333 11"
+                                ></polyline>
+                                <line
+                                  class="transition-all duration-200 ease-out transform -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 group-hover:ml-0"
+                                  x1="10.8333333"
+                                  y1="5.5"
+                                  x2="0.833333333"
+                                  y2="5.16666667"
+                                ></line>
+                              </g>
+                            </g>
+                          </g>
+                        </svg>
+                      </h2>
+                      <p
+                        class="text-base text-neutral-600 dark:text-neutral-400 mb-3"
+                      >
+                        <span>${post.description}</span>
+                      </p>
+                      <div
+                        class="flex items-center gap-4 text-sm font-medium text-neutral-600 dark:text-neutral-400"
+                      >
+                        <span>Posted on ${post.date}</span>
+                        <span class="flex items-center">
+                          <svg
+                            class="w-4 h-4 mr-1"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path>
+                          </svg>
+                          ${post.readTime}
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="relative flex-1 h-48 rounded-xl overflow-hidden flex-shrink-0"
+                    >
+                      <img
+                        src="${post.image}"
+                        alt="${post.title}"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          `
+            )
+            .join("");
+        }
+
+        function renderPagination(page) {
+          const currentPage = Math.max(1, Math.min(page, totalPages));
+          const paginationContainer = document.getElementById(
+            "pagination-container"
+          );
+          if (!paginationContainer) return;
+
+          if (totalPages <= 1) {
+            paginationContainer.innerHTML = "";
+            return;
+          }
+
+          let paginationHTML =
+            '<div class="flex justify-center items-center gap-2 mt-8">';
+
+          if (currentPage > 1) {
+            paginationHTML += `
+              <a
+                href="${getPageUrl(currentPage - 1)}"
+                class="px-3 py-1 text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+              >
+                Previous
+              </a>
+            `;
+          } else {
+            paginationHTML += `
+              <span
+                class="px-3 py-1 text-sm font-medium text-neutral-600 dark:text-neutral-400 opacity-50 cursor-not-allowed"
+              >
+                Previous
+              </span>
+            `;
+          }
+
+          for (let i = 1; i <= totalPages; i++) {
+            const isCurrentPage = i === currentPage;
+            paginationHTML += `
+              <a
+                href="${getPageUrl(i)}"
+                aria-current="${isCurrentPage ? "page" : undefined}"
+                class="w-8 h-8 flex items-center justify-center rounded-full text-sm font-medium transition-colors ${
+                  isCurrentPage
+                    ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900"
+                    : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100"
+                }"
+              >
+                ${i}
+              </a>
+            `;
+          }
+
+          if (currentPage < totalPages) {
+            paginationHTML += `
+              <a
+                href="${getPageUrl(currentPage + 1)}"
+                class="px-3 py-1 text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+              >
+                Next
+              </a>
+            `;
+          } else {
+            paginationHTML += `
+              <span
+                class="px-3 py-1 text-sm font-medium text-neutral-600 dark:text-neutral-400 opacity-50 cursor-not-allowed"
+              >
+                Next
+              </span>
+            `;
+          }
+
+          paginationHTML += "</div>";
+          paginationContainer.innerHTML = paginationHTML;
+        }
+
+        function handlePaginationClick(e) {
+          const target = e.target.closest("a");
+          if (!target || !target.href) return;
+
+          const href = target.getAttribute("href");
+          if (href && href.startsWith("/posts") && href.includes("?page=")) {
+            e.preventDefault();
+            const url = new URL(href, window.location.origin);
+            const page = url.searchParams.get("page") || "1";
+            window.history.pushState({ page }, "", href);
+            const currentPage = parseInt(page, 10);
+            renderPosts(currentPage);
+            renderPagination(currentPage);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        }
+
+        const currentPage = getCurrentPage();
+        renderPosts(currentPage);
+        renderPagination(currentPage);
+
+        const paginationContainer = document.getElementById(
+          "pagination-container"
+        );
+        if (paginationContainer) {
+          paginationContainer.addEventListener("click", handlePaginationClick);
+        }
+
+        window.addEventListener("popstate", function () {
+          const page = getCurrentPage();
+          renderPosts(page);
+          renderPagination(page);
+        });
+      });
+    })();</script><link rel="stylesheet" href="/_astro/about.CAE1JynX.css">
+<style>html,body{margin:0;padding:0;height:100%;overflow-x:hidden}body{display:flex;flex-direction:column;min-height:100vh}main[data-astro-cid-at4y73ej]{flex:1}section[data-astro-cid-at4y73ej][class*=text-gray-700]{margin:0;padding:0;flex-shrink:0}.dot-hexagon-light[data-astro-cid-at4y73ej]{background-image:radial-gradient(circle,#80808045 1px,transparent 1px),radial-gradient(circle,#80808045 1px,transparent 1px);background-size:24px 41.57px;background-position:0 0,12px 20.78px}.dot-hexagon-dark[data-astro-cid-at4y73ej]{background-image:radial-gradient(circle,#ffffff35 1px,transparent 1px),radial-gradient(circle,#ffffff35 1px,transparent 1px);background-size:24px 41.57px;background-position:0 0,12px 20.78px}
+</style></head> <body class="bg-white dark:bg-neutral-900 transition-colors duration-300" data-astro-cid-at4y73ej> <div class="fixed inset-0 z-0 pointer-events-none" data-astro-cid-at4y73ej> <div class="absolute inset-0 -z-10 dot-hexagon-light dark:dot-hexagon-dark" data-astro-cid-at4y73ej></div> <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_0%,rgba(255,255,255,0.5)_60%,rgba(255,255,255,0.9)_85%,white_100%)] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_0%,rgba(23,23,23,0.5)_60%,rgba(23,23,23,0.9)_85%,rgb(23,23,23)_100%)] -z-10" data-astro-cid-at4y73ej></div> <div class="absolute left-0 right-0 top-0 -z-10 m-auto h-[1200px] w-[1200px] rounded-full bg-neutral-400 opacity-10 blur-[100px]" data-astro-cid-at4y73ej></div> </div> <main class="flex-1 relative z-10" data-astro-cid-at4y73ej> <!-- Navigation Bar Component --><nav class="relative z-50"> <div class="container mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex items-center justify-between h-16"> <a href="/" class="text-xl font-bold text-neutral-700 hover:text-neutral-400 dark:text-neutral-300 dark:hover:text-neutral-100 transition-colors">
+Your Portfolio
+</a> <div class="flex items-center space-x-6"> <a href="/" class="text-neutral-600 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">Home</a> <a href="/posts/" class="text-neutral-600 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">Posts</a> <a href="/projects/" class="text-neutral-600 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">Projects</a> <a href="/about/" class="text-neutral-600 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">About</a> <button id="theme-toggle" class="p-2 rounded-full text-neutral-600 hover:text-neutral-400 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors" title="Toggle theme"> <svg class="w-5 h-5 theme-icon-light hidden" fill="currentColor" viewBox="0 0 20 20"> <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path> </svg> <svg class="w-5 h-5 theme-icon-dark hidden" fill="currentColor" viewBox="0 0 20 20"> <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path> </svg> </button> </div> </div> </div> </nav> <script type="module">document.addEventListener("DOMContentLoaded",function(){const t=document.getElementById("theme-toggle"),n=t.querySelector(".theme-icon-light"),c=t.querySelector(".theme-icon-dark");function o(e){e?(n.classList.add("hidden"),c.classList.remove("hidden")):(n.classList.remove("hidden"),c.classList.add("hidden"))}const s=document.documentElement.classList.contains("dark");o(s),t.addEventListener("click",function(){const e=document.documentElement.classList.contains("dark"),d=e?"light":"dark";document.documentElement.classList.toggle("dark"),o(!e),localStorage.setItem("theme",d)})});</script> <section class="relative z-20 w-[896px] mx-auto mt-24" data-astro-cid-at4y73ej> <div class="flex justify-between items-center mb-12" data-astro-cid-at4y73ej> <h2 class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-3xl lg:text-4xl" data-astro-cid-at4y73ej>
+Blog Posts
+</h2> </div> <div id="posts-container" class="flex flex-col items-stretch w-full gap-8" data-astro-cid-at4y73ej></div> <div id="pagination-container" data-astro-cid-at4y73ej></div> </section> </main> <!-- Footer Component --><section class="relative text-gray-700"> <div class="container flex flex-col items-center justify-center min-h-[40px] mx-auto px-7 max-w-7xl sm:flex-row sm:min-h-[50px] bg-transparent py-4"> <a class="h-5 text-base group relative z-30 flex items-center space-x-1.5 text-neutral-700 dark:text-neutral-300 font-semibold" href="/"> <span class="text-xl -translate-y-0.5 group-hover:-rotate-12 group-hover:scale-[1.2] ease-in-out duration-300">✦</span> <span class="-translate-y-0.5">Your Name</span> </a> <p class="mt-2 text-sm text-neutral-700 dark:text-neutral-300 sm:ml-4 sm:pl-4 sm:border-l sm:border-neutral-700 dark:sm:border-neutral-300 sm:mt-0">
+© 2025 Your Name. All rights reserved.
+</p> <span class="inline-flex justify-center mt-2 space-x-5 sm:ml-auto sm:mt-0 sm:justify-start"> <a href="https://x.com/astrodotbuild" target="_blank" class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-400 dark:hover:text-neutral-300"> <span class="sr-only">𝕏</span> <svg class="w-5 h-5" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M95 50c0 24.853-20.147 45-45 45S5 74.853 5 50 25.147 5 50 5s45 20.147 45 45Zm-51.21 2.688-21.51-28.76h16.578l14.1 18.855 17.453-18.855h4.872L55.135 45.694l22.72 30.377H61.279L45.967 55.598l-18.95 20.473h-4.873L43.79 52.688Zm-6.73-25.172h-7.616l33.63 44.967h7.616L37.06 27.516Z" fill="currentColor"></path> </svg> </a> <a href="https://github.com/tomcomtang/astro-multiplepage-portfolio" target="_blank" class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-400 dark:hover:text-neutral-300"> <span class="sr-only">GitHub</span> <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.12 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path> </svg> </a> <a href="mailto:364786053@qq.com" class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-400 dark:hover:text-neutral-300"> <span class="sr-only">Email</span> <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path> </svg> </a> </span> </div> </section> </body></html>
