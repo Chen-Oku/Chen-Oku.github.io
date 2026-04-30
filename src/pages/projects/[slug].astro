@@ -1,0 +1,198 @@
+---
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+import { getProjectBySlug, getAllProjectSlugs } from "../../utils/getProjects";
+
+export async function getStaticPaths() {
+  const slugs = getAllProjectSlugs();
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect("/projects/");
+}
+
+const project = getProjectBySlug(slug);
+
+if (!project) {
+  return Astro.redirect("/projects/");
+}
+
+const { frontmatter, Content } = project;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{frontmatter.title} - Project</title>
+    <meta name="description" content={frontmatter.description} />
+    <script is:inline>
+      (function () {
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const initialTheme =
+          savedTheme === "system"
+            ? prefersDark
+              ? "dark"
+              : "light"
+            : savedTheme;
+
+        if (initialTheme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        window
+          .matchMedia("(prefers-color-scheme: dark)")
+          .addEventListener("change", (e) => {
+            if (localStorage.getItem("theme") === "system") {
+              if (e.matches) {
+                document.documentElement.classList.add("dark");
+              } else {
+                document.documentElement.classList.remove("dark");
+              }
+            }
+          });
+      });
+    </script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow-x: hidden;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      main {
+        flex: 1;
+      }
+      section[class*="text-gray-700"] {
+        margin: 0;
+        padding: 0;
+        flex-shrink: 0;
+      }
+
+      .dot-hexagon-light {
+        background-image: radial-gradient(
+            circle,
+            #80808045 1px,
+            transparent 1px
+          ),
+          radial-gradient(circle, #80808045 1px, transparent 1px);
+        background-size: 24px 41.57px;
+        background-position:
+          0 0,
+          12px 20.78px;
+      }
+
+      .dot-hexagon-dark {
+        background-image: radial-gradient(
+            circle,
+            #ffffff35 1px,
+            transparent 1px
+          ),
+          radial-gradient(circle, #ffffff35 1px, transparent 1px);
+        background-size: 24px 41.57px;
+        background-position:
+          0 0,
+          12px 20.78px;
+      }
+    </style>
+  </head>
+  <body class="bg-white dark:bg-neutral-900 transition-colors duration-300 min-h-screen flex flex-col">
+    <div class="fixed inset-0 z-0 pointer-events-none">
+      <div
+        class="absolute inset-0 -z-10 dot-hexagon-light dark:dot-hexagon-dark"
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_0%,rgba(255,255,255,0.5)_60%,rgba(255,255,255,0.9)_85%,white_100%)] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_0%,rgba(23,23,23,0.5)_60%,rgba(23,23,23,0.9)_85%,rgb(23,23,23)_100%)] -z-10"
+      >
+      </div>
+      <div
+        class="absolute left-0 right-0 top-0 -z-10 m-auto h-[1200px] w-[1200px] rounded-full bg-neutral-400 opacity-10 blur-[100px]"
+      >
+      </div>
+    </div>
+
+    <main class="flex-1 relative z-10">
+      <Navigation />
+
+      <article class="relative z-20 w-[896px] max-w-full mx-auto mt-24 mb-12 px-7 lg:px-0">
+        <a href="/projects/" class="inline-flex items-center text-sm text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 mb-6">
+          ← Back to projects
+        </a>
+
+        <header class="mb-8">
+          <h1 class="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 sm:text-3xl lg:text-4xl mb-2">
+            {frontmatter.title}
+          </h1>
+          <p class="text-base text-neutral-600 dark:text-neutral-400 mb-3">
+            {frontmatter.description}
+          </p>
+          <div class="flex flex-wrap items-center gap-3 text-sm text-neutral-500 dark:text-neutral-400">
+            {frontmatter.date && <span>{new Date(frontmatter.date).toLocaleDateString("en-US")}</span>}
+            {frontmatter.status && <span class="px-2 py-1 rounded-full bg-neutral-200 dark:bg-neutral-800">{frontmatter.status}</span>}
+          </div>
+        </header>
+
+        {
+          frontmatter.image && (
+            <img
+              src={frontmatter.image}
+              alt={frontmatter.title || "Project image"}
+              class="w-full rounded-xl mb-8 object-cover"
+            />
+          )
+        }
+
+        <div class="flex gap-3 mb-10">
+          {
+            frontmatter.demoUrl && (
+              <a href={frontmatter.demoUrl} target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-sm font-medium text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200">
+                Live Demo
+              </a>
+            )
+          }
+          {
+            frontmatter.repoUrl && (
+              <a href={frontmatter.repoUrl} target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-sm font-medium text-neutral-900 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-700">
+                Repository
+              </a>
+            )
+          }
+        </div>
+
+        {
+          frontmatter.tags && frontmatter.tags.length > 0 && (
+            <div class="mb-8 flex flex-wrap gap-2">
+              {frontmatter.tags.map((tag) => <span class="px-3 py-1 text-xs rounded-full bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200">{tag}</span>)}
+            </div>
+          )
+        }
+
+        <div class="prose prose-neutral dark:prose-invert max-w-none">
+          <Content />
+        </div>
+      </article>
+    </main>
+
+    <Footer />
+  </body>
+</html>

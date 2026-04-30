@@ -104,11 +104,15 @@ import { aboutContent } from "../config/content.ts";
           </h2>
           <div class="flex flex-col md:flex-row gap-8 mt-3 sm:mt-4 lg:mt-6">
             <div class="w-full md:w-1/2 flex flex-col">
-              <p
-                class="text-sm leading-6 text-gray-600 dark:text-neutral-400 sm:leading-7 lg:leading-8 sm:text-base lg:text-lg"
-              >
-                {aboutContent.description}
-              </p>
+              <div class="space-y-4">
+                {
+                  aboutContent.descriptionParagraphs.map((paragraph) => (
+                    <p class="text-sm leading-6 text-gray-600 dark:text-neutral-400 sm:leading-7 lg:leading-8 sm:text-base lg:text-lg">
+                      {paragraph}
+                    </p>
+                  ))
+                }
+              </div>
               <div class="mt-auto pt-4 flex flex-wrap gap-2">
                 {
                   aboutContent.skills.map((skill) => (
@@ -180,18 +184,29 @@ import { aboutContent } from "../config/content.ts";
               {aboutContent.connect.title}
             </h2>
             <div class="py-[30px]">
-              <p
-                class="text-sm leading-6 text-gray-600 dark:text-neutral-400 sm:leading-7 lg:leading-8 sm:text-base lg:text-lg"
-              >
-                {aboutContent.connect.description}
-                <a
-                  href={aboutContent.connect.email.href}
-                  class="text-indigo-600 underline"
-                >
-                  {aboutContent.connect.email.text}
-                </a>
-                .
-              </p>
+              <div class="space-y-4 text-sm leading-6 text-gray-600 dark:text-neutral-400 sm:leading-7 lg:leading-8 sm:text-base lg:text-lg">
+                <p>{aboutContent.connect.introParagraph}</p>
+                <p>
+                  {aboutContent.connect.linksParagraph.beforeLinks}
+                  <a
+                    href={aboutContent.connect.linkedIn.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-indigo-600 underline"
+                  >
+                    {aboutContent.connect.linkedIn.text}
+                  </a>
+                  {aboutContent.connect.linksParagraph.betweenLinks}
+                  <a
+                    href={aboutContent.connect.email.href}
+                    class="text-indigo-600 underline"
+                  >
+                    {aboutContent.connect.email.text}
+                  </a>
+                  {aboutContent.connect.linksParagraph.afterLinks}
+                </p>
+                <p>{aboutContent.connect.outroParagraph}</p>
+              </div>
             </div>
           </div>
         </div>

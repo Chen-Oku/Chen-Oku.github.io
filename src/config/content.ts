@@ -3,24 +3,52 @@ export const siteConfig = {
   title: "Chen Oku's Portfolio",
   description: "A showcase of my work and thoughts",
   social: {
-    github: "https://github.com/tomcomtang/astro-multiplepage-portfolio",
-    twitter: "https://x.com/astrodotbuild",
-    email: "mailto:364786053@qq.com",
+    github: "https://github.com/Chen-Oku",
+    behance: "https://www.behance.net/Chenoku",
+    linkedin: "https://www.linkedin.com/in/mvsierra",
+    email: "mailto:chenoku@gmail.com",
   },
+  socialLinks: [
+    {
+      id: "behance",
+      label: "Behance",
+      href: "https://www.behance.net/Chenoku",
+      icon: "behance",
+    },
+    {
+      id: "github",
+      label: "GitHub",
+      href: "https://github.com/Chen-Oku",
+      icon: "github",
+    },
+    {
+      id: "linkedin",
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/mvsierra",
+      icon: "linkedin",
+    },
+    {
+      id: "email",
+      label: "Email",
+      href: "mailto:chenoku@gmail.com",
+      icon: "email",
+    },
+  ],
 };
 
 export const homeContent = {
   title: "Hello, I'm Miguel Velandia (Chen Oku)",
-  description:
+  descriptionParagraphs: [
     "I design and build interactive experiences through Unity, UI/UX systems, gameplay development, and real-time 3D environments.",
+  ],
   buttons: {
     about: {
       text: "View About",
       href: "/about/",
     },
     posts: {
-      text: "Read Posts",
-      href: "/posts/",
+      text: "View Projects",
+      href: "/projects/",
     },
   },
   images: {
@@ -35,8 +63,12 @@ export const aboutContent = {
     description: "Learn more about my background, skills, and experience",
   },
   title: "About Me",
-  description:
-  "I’m an Industrial Designer, Unity Developer, and 3D Artist with over 9 years of experience creating visual and interactive solutions across product design, architectural visualization, and real-time digital experiences. My work is centered around understanding how people interact with products, spaces, and interfaces, designing solutions that improve usability, communication, and player experience. This naturally led me into game development, where I combine design thinking, technical implementation, and real-time 3D workflows inside Unity. I enjoy working as the bridge between creative vision and technical execution, building gameplay systems, UI interactions, and immersive environments that feel both functional and engaging.",
+  descriptionParagraphs: [
+    "I’m an Industrial Designer, Unity Developer, and 3D Artist with over 9 years of experience creating visual and interactive solutions across product design, architectural visualization, and real-time digital experiences.",
+    "My work is centered around understanding how people interact with products, spaces, and interfaces, designing solutions that improve usability, communication, and player experience.",
+    "This naturally led me into game development, where I combine design thinking, technical implementation, and real-time 3D workflows inside Unity.",
+    "I enjoy working as the bridge between creative vision and technical execution, building gameplay systems, UI interactions, and immersive environments that feel both functional and engaging.",
+  ],
   skills: [
     "Unity",
     "Unreal Engine",
@@ -55,7 +87,7 @@ export const aboutContent = {
     "Interactive Design",
   ],
   image: {
-    src: "/assets/images/about/coder.jpg",
+    src: "/assets/images/about/Miguel.jpg",
     alt: "Profile",
   },
   experience: {
@@ -85,13 +117,32 @@ export const aboutContent = {
   },
   connect: {
     title: "Let's Connect",
-    description:
-      "Feel free to reach out if you want to collaborate or just say hi! You can find us on social media or drop us an",
+    introParagraph:
+      "I’m always open to new opportunities in game development, UI/UX design, and real-time interactive projects.",
+    linksParagraph: {
+      beforeLinks:
+        "Whether you'd like to collaborate, discuss a role, or simply connect, feel free to reach out via ",
+      betweenLinks: " or ",
+      afterLinks: ".",
+    },
+    outroParagraph: "I look forward to connecting with you!",
+    linkedIn: {
+      text: "LinkedIn",
+      href: "https://www.linkedin.com/in/mvsierra",
+    },
     email: {
       text: "email",
       href: "mailto:364786053@qq.com",
     },
   },
+};
+
+export const postsContent = {
+  meta: {
+    title: "Blog Posts - Your Portfolio",
+    description: "Read my latest blog posts and articles",
+  },
+  title: "Blog Posts",
 };
 
 export const projectsContent = {
@@ -100,30 +151,27 @@ export const projectsContent = {
     description: "Showcase of my best work and projects",
   },
   title: "Our Projects",
-  description:
-    "Here you can showcase your best work. Each project should include a brief description, the technologies used, and any notable achievements. This helps potential clients or employers understand your capabilities.",
-  projects: [
-    {
-      title: "Project One",
-      description:
-        "A brief description of your first project. Explain what it does and what technologies you used.",
-      image: "/assets/images/projects/project1.jpg",
-      href: "#",
-    },
-    {
-      title: "Project Two",
-      description:
-        "Describe your second project here. Highlight the key features and your role in development.",
-      image: "/assets/images/projects/project2.jpg",
-      href: "#",
-    },
-    {
-      title: "Project Three",
-      description:
-        "Share details about your third project. What problems did it solve? What was the outcome?",
-      image: "/assets/images/projects/project3.png",
-      href: "#",
-    },
+  descriptionParagraphs: [
+    "Here you can showcase your best work.",
+    "Each project should include a brief description, the technologies used, and any notable achievements.",
+    "This helps potential clients or employers understand your capabilities.",
   ],
+  github: {
+    username: "Chen-Oku",
+    featuredRepos: ["Checkpoint4", "FrankenHand"],
+    maxRepos: 8,
+    repoOverrides: {
+      Checkpoint4: {
+        title: "Checkpoint4 - Power-Ups VFX",
+        description:
+          "Unity third-person prototype with interactive power-ups, custom shaders, and VFX systems.",
+        language: "C# / ShaderLab / HLSL",
+      },
+      FrankenHand: {
+        description:
+          "Gameplay and technical-art experiments focused on interaction and visual feedback.",
+      },
+    },
+  },
 };
 

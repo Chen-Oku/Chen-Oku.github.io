@@ -126,11 +126,15 @@ import { siteConfig, homeContent } from "../config/content.ts";
                 >
                   {homeContent.title}
                 </h1>
-                <p
-                  class="mt-3 text-lg leading-7 text-neutral-600 dark:text-neutral-400"
-                >
-                  {homeContent.description}
-                </p>
+                <div class="mt-3 space-y-3">
+                  {
+                    homeContent.descriptionParagraphs.map((paragraph) => (
+                      <p class="text-lg leading-7 text-neutral-600 dark:text-neutral-400">
+                        {paragraph}
+                      </p>
+                    ))
+                  }
+                </div>
                 <div class="flex flex-row gap-4 mt-4">
                   <a
                     class="group inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-neutral-900 rounded-lg hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-neutral-200 transition-all duration-300 hover:scale-105 cursor-pointer"
