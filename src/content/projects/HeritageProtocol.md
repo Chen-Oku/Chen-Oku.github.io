@@ -1,11 +1,11 @@
 ---
-title: "HeritageProtocol (Demo)"
-description: "A narrative platformer where a severed hand defies its creator. I acted as Development Team Lead, Technical Artist, and UI Designer."
-date: "2025-06-15"
+title: "HeritageProtocol (Demo)- Sci-Fi Exploration & Puzzle Game"
+description: "A sci-fi puzzle exploration game. I served as Development Lead, Technical Artist, and Gameplay Programmer, focusing on advanced custom shaders and interaction systems."
+date: "2025-12-25"
 status: "Completed"
-image: "/assets/images/projects/HeritageProtocol/HeritageProtocol.png"
+image: "assets/images/projects/HeritageProtocol/HeritageProtocol.jpg"
 slug: "HeritageProtocol"
-demoUrl: "https://chenoku.itch.io/"
+demoUrl: "https://chenoku.itch.io/heritageprotocol"
 repoUrl: "https://github.com/Chen-Oku/HeritageProtocol/tree/M-Branch"
 tags:
   - Unity
@@ -15,104 +15,134 @@ tags:
   - UI/UX
 ---
 
-# FrankenHand
+# HeritageProtocol
 
-*"A severed hand, a life instinct and a destiny that defies creation."* 
+>Uncover the secrets of the past through the lens of advanced technology. **Heritage Protocol** is a sci-fi exploration and puzzle game that challenges players to uncover hidden truths within an ancient, abandoned facility. By using advanced tech tools, players interact with the environment to reveal concealed messages, solve spatial puzzles, and piece together a forgotten history.
 
-**FrankenHand** is a gothic, colorful thriller platformer inspired by the classic Frankenstein tale, but with a twist: the spotlight is on a forgotten, severed limb. After his creature’s break out from Dr. Frankenstein's lab, a piece is left behind… a severed hand, scared but with a clear decision.
-
-![Captura ING](/assets/images/projects/FrankenHand/FrankenHand3.jpg)
+<figure class="my-8">
+  <img src="/assets/images/projects/HeritageProtocol/HeroShot.jpg" alt="Heritage Protocol gameplay screenshot showing the stylized sci-fi environment" class="w-4/5 mx-auto rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Heritage Protocol in action: Exploring the abandoned facility using advanced visual tech.</figcaption>
+</figure>
 
 ## Overview
 
-Describe the goal of the project, who it was for, and what problem it solved.
 
 ### My Role & The Challenge
 
-In this project, I wore multiple hats as the **Development Team Lead**, **Technical Artist**, and **UI Designer**. 
+In this project, I stepped into the role of **Development Team Lead**, while heavily focusing on **Technical Art** and **Gameplay Programming**.
 
-The core challenge that defined our game was our art direction: the animation is made out entirely in 2D whereas the environment itself is 3D. This inverse approach to classic gaming required building a unique technical pipeline from scratch.
+The main challenge was visual communication: the game requiered a distinct stylized look and complex incicate interactable objects, hidden secrets and story progression. To achieve this, I built a robust library of custom shaders using Unity’s Shader Graph and integrated them seamlessly with C# gameplay systems.
 
 ### Technical Deep Dive
 
-#### 1. Technical Art: Dynamic Outline System & Lighting
-To ensure our 2D protagonist remained visible within the dense, 3D gothic environments, I developed a custom outline system. Rather than relying solely on a basic shader, I wrote a C# controller that dynamically adjusts the rendering depth (_ZTest) properties of the materials in real-time.
+#### 1. Technical Art: Advanced Custom Shaders
+As a Technical Artist, I was responsible for defining the visual signature of the interactive elements. I developed several custom shaders from scratch, including Toon shading with halftone patterns, holographic fences, and glitch effects.
+
+One of our core features was the **"Reveal" Mechanic**: a puzzle involving a "dirty" surface that, when illuminated by a specific light source, revealed its true, clean texture underneath.
 
 ```csharp
-// Managing different rendering depth modes
-switch (outlineMode)
+// Surface Reveal Mechanic, Raycasting to UV coordinates and painting the texture mask
+Ray ray = _camera.ScreenPointToRay(screenPosition);
+if (Physics.Raycast(ray, out RaycastHit hit))
 {
-    case Mode.OutlineVisible:
-        outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
-        outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
-        outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
-        break;
+    // 1. Get UV coordinates from the raycast hit
+    Vector2 uv = hit.textureCoord;
 
-    case Mode.OutlineAndSilhouette:
-        outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
-        outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
-        outlineFillMaterial.SetFloat("_OutlineWidth", outlineWidth);
-        break;
-}
-```
+    // 2. Map UVs to pixel coordinates on our downscaled mask for performance
+    int px = Mathf.RoundToInt(uv.x * (_maskWidth - 1));
+    int py = Mathf.RoundToInt(uv.y * (_maskHeight - 1));
 
-![Captura Outline Hidding Hand](/assets/images/projects/FrankenHand/HiddingHand.gif)
+    // 3. PaintAt() Logic: Apply a circular brush falloff to modify the mask's pixels
+    float dist = Mathf.Sqrt(dx * dx + dy * dy);
+    float t = 1f - (dist / brushRadius); // 1 at center -> 0 at edge
+    float delta = Mathf.Clamp01(t * _brushStrength);
 
-This approach allowed us to create distinct rendering states giving the player perfect spatial awareness. I complemented this technical solution with a lighting strategy that contrasts warm general lighting with cold tones, naturally attracting the player's eye to elements of interest.
-
-<figure>
-  <img src="/assets/images/projects/FrankenHand/FrankenHand4.jpg" alt="Frankenhand Cold Ambient Lighting">
-  <figcaption>*A nocturnal setting where warm light sources pierce the darkness, establishing a tense, gothic atmosphere.*</figcaption>
-</figure>
-
-
-<figure>
-  <img src="/assets/images/projects/FrankenHand/FrankenHand5.jpg" alt="Frankenhand Warm Focal Lighting">
-  <figcaption>*Fuchsia tones are strategically used to highlight key focal points and interactive elements, while volumetric fog enhances the environmental ambiance.*</figcaption>
-</figure>
-
-#### 2. Gameplay Programming: Architecture & Systems
-
-##### Modular 2D-in-3D Controller
-Building a 2D character in a 3D world requires precise control over visuals and physics. I designed a modular character controller architecture where movement, animations, and interactions are decoupled into separate scripts, managed by a central `PlayerController`.  
-
-For the movement mechanics, I implemented modern platforming features like Coyote Time and directional dashing. One of the unique challenges was ensuring the 2D sprite felt natural while traversing the Z-axis. I solved this by constantly interpolating the sprite's transform to face the target movement direction seamlessly.
-
-```csharp
-// Smoothly rotating the 2D sprite in 3D space
-if (targetDirection.sqrMagnitude > 0.01f)
-{
-    // Calculate the target rotation based on the 3D movement vector
-    Quaternion targetFlip = Quaternion.LookRotation(targetDirection);
+    // Uniformly subtract color to "clean" the mask smoothly
+    _pixels[idx].r = (byte)Mathf.RoundToInt(_pixels[idx].r * (1f - delta));
+    _pixels[idx].g = (byte)Mathf.RoundToInt(_pixels[idx].g * (1f - delta));
+    _pixels[idx].b = (byte)Mathf.RoundToInt(_pixels[idx].b * (1f - delta));
     
-    // Smoothly interpolate the sprite's rotation to prevent snappy, robotic turns
-    spriteVisualTransform.localRotation = Quaternion.Slerp(
-        spriteVisualTransform.localRotation,
-        targetFlip,
-        10f * Time.deltaTime 
-    );
+    _maskDirty = true; // Flags the texture to Apply() in batches
 }
 ```
 
-#### Environmental Hazards & Enemy AI
-Beyond the core controller, I led the development of several mechanics to bring the gothic environment to life and create a tense puzzle-platforming experience:
+#### The Shader Graph Implementation
+The C# script passes this dynamically generated mask _DarkTex to a custom Shader Graph I developed. The shader uses the mask's values to interpolate between the dirt material and the clean surface seamlessly.
 
-* **Dynamic Platforming:** I programmed the logic for towers of books that crumble upon landing, forcing the player to act quickly and chain double jumps.
-* **Hazard Systems:** I developed a warning system where falling bottles project a shadow on the ground before impact, allowing the player to dodge in time.
-* **Enemy States:** I created paralyzing mechanics for the cockroaches; if they get too close, the hand freezes temporarily, hindering movement.
 
-![Captura botella al caer](/assets/images/projects/FrankenHand/FallingBottle.gif)
+<figure class="my-8">
+  <img src="/assets/images/projects/FrankenHand/HiddingHand.gif" alt="Dynamic outline system demonstration showing the hand character becoming visible and invisible with the custom shader" class="w-3/5 mx-auto rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Dynamic Outline System: Real-time depth adjustments for 2D character visibility.</figcaption>
+</figure>
 
-#### 3. UI/UX Design
-As the UI Designer, I created a completely 2D user interface. A major part of the narrative relies on finding notes from Dr. Frankenstein. I programmed a pop-up system for these diary fragments that allows players to uncover the lore seamlessly without interrupting fast-paced moments, such as the final escape sequence from the cat.
+#### 2. Gameplay Programming: Events & Systems
+##### Proximity-Based Fading Statues
+A key mission required players to inspect four mysterious statues. To make this encounter feel eerie and supernatural, I programmed a proximity system where the statues gradually dissolve and fade away as the player approaches them, eventually triggering the next quest phase.
 
-### Leadership & Soft Skills
+**The C# Logic: Performance & Decoupled Systems**
+Animating shader properties on multiple objects can quickly degrade performance if not handled correctly. Instead of modifying instance materials directly (which breaks draw-call batching), I utilized `MaterialPropertyBlock` to update the dissolve float seamlessly. 
 
-Working on FrankenHand was a deeply collaborative experience. The art team pitched the 2D-in-3D concept without knowing exactly how it would work, and there wasn’t a predefined path. 
+Additionally, I implemented an event-driven architecture using C# `Actions`. This allowed the statues to broadcast their dissolved state without tightly coupling them to the Mission Manager.
 
-Artists and developers joined forces, and as the Development Lead, I helped build the workflow to make it happen.
+```csharp
+// SculptureDisolve
+// Performant shader animation and event-driven quest updates
+
+private void SetDissolveValue(float value)
+{
+    // Using MaterialPropertyBlock prevents material instancing, saving memory and draw calls
+    foreach (var rend in targetRenderers)
+    {
+        var mpb = new MaterialPropertyBlock();
+        rend.GetPropertyBlock(mpb);
+        mpb.SetFloat(propID, value); 
+        rend.SetPropertyBlock(mpb);
+    }
+}
+
+private IEnumerator HideAfterDelay(float seconds)
+{
+    yield return new WaitForSeconds(seconds);
+    targetChild.SetActive(false);
+
+    if (!hasDissolved)
+    {
+        hasDissolved = true;
+        // Broadcast completion to decoupled systems (like the UI or Quest Manager)
+        OnSculptureDissolved?.Invoke(this);
+    }
+}
+```
+##### The Shader Graph Setup
+The visual aspect of the fade was built in Shader Graph. It takes the _Dissolve float from the C# script and subtracts it from a generated Simple Noise node. This result is fed into the material's Alpha Clip threshold, while also generating a glowing emissive edge along the clipping border to enhance the sci-fi aesthetic.
+
+
+#### Additional Systems Engineered
+* **Beyond the shaders**: I engineered the underlying logic for the game's core progression systems:
+
+* **Dynamic Minimap**: Implemented a real-time minimap UI that tracks the player's proximity to objectives and hidden items.
+
+* **Teleportation Network**: Created a modular teleporter system to handle player traversal across the facility.
+
+* **Cinematics Integration**: Scripted the logic to trigger and transition smoothly between gameplay and the intro/outro cinematics.
+
+
+#### 3. Mission UI & Minimap
+To guide the player without overwhelming the screen, I developed a clean, sci-fi-inspired UI. The interface includes a functional minimap positioned below the active mission objectives, providing real-time proximity alerts to search items and clear interactable prompts.
+
+#### Leadership & Project Management
+Managing the pipeline between the 3D modeling team, animators, and programmers required strict organization. By establishing clear documentation (GDDs), utilizing shared Google Drive hubs, and maintaining open communication, we ensured that the art assets seamlessly integrated with the technical constraints of my custom shaders and scripts.
+
 
 ### Try it out
-* [**View Source Code on GitHub**](https://github.com/Chen-Oku/FrankenHand)
-* [**Play the Demo from Itch.io**](https://chenoku.itch.io/frankenhand)
-* [**Check out our Pitch Deck**](https://www.canva.com/design/DAGpjDjwRWo/BJMhdu7qZ4bPBcFqv9V1nQ/edit)
+<div class="flex flex-wrap gap-4 mt-6 mb-8">
+  <a href="https://chenoku.itch.io/frankenhand" target="_blank" class="px-6 py-3 bg-purple-800 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors no-underline">
+    🎮 Play the Demo on Itch.io
+  </a>
+  <a href="https://github.com/Chen-Oku/FrankenHand" target="_blank" class="px-6 py-3 bg-cyan-800 text-white font-bold rounded-lg hover:bg-zinc-700 transition-colors no-underline">
+    💻 View Source on GitHub
+  </a>
+  <a href="https://www.canva.com/design/DAGpjDjwRWo/BJMhdu7qZ4bPBcFqv9V1nQ/edit" target="_blank" class="px-6 py-3 bg-purple-800 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors no-underline">
+    📊 Check out our Pitch Deck
+  </a>
+</div>

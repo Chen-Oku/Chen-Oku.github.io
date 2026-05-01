@@ -115,10 +115,12 @@
       document.getElementById("theme-toggle-mobile"),
     ].filter(Boolean);
 
-    function updateThemeIcon(isDark) {
+    function updateThemeIcon(isDark: boolean) {
       themeToggles.forEach((toggle) => {
-        const lightIcon = toggle.querySelector(".theme-icon-light");
-        const darkIcon = toggle.querySelector(".theme-icon-dark");
+        if (!toggle) return;
+        
+        const lightIcon = toggle.querySelector(".theme-icon-light") as HTMLElement;
+        const darkIcon = toggle.querySelector(".theme-icon-dark") as HTMLElement;
         if (!lightIcon || !darkIcon) return;
 
         if (isDark) {
@@ -134,7 +136,9 @@
     const isDark = document.documentElement.classList.contains("dark");
     updateThemeIcon(isDark);
 
-    themeToggles.forEach((toggle) => {
+    themeToggles.forEach((toggle: HTMLElement | null) => {
+      if (!toggle) return;
+      
       toggle.addEventListener("click", function () {
         const isDark = document.documentElement.classList.contains("dark");
         const newTheme = isDark ? "light" : "dark";

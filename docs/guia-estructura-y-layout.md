@@ -362,10 +362,338 @@ The same structure applies to posts in `src/content/posts/`:
 
 ---
 
-## 11) Regla de mantenimiento de esta guia
+## 11) Uso del componente `<Image />` de Astro (Optimización de imágenes)
+
+### ¿Por qué usar `<Image />` en lugar de `<img>`?
+
+Astro proporciona el componente `<Image />` para optimización automática de imágenes:
+
+- **Conversión automática a WebP** (formato moderno más ligero)
+- **Generación de múltiples tamaños** responsive
+- **Lazy loading** por defecto
+- **Mejor rendimiento** y SEO
+
+### Estructura de carpetas para imágenes optimizadas
+
+**Antes (método antiguo):**
+- Imágenes en `public/assets/images/`
+- Rutas absolutas como `/assets/images/projects/image.jpg`
+
+**Ahora (método optimizado):**
+- Imágenes en `src/assets/images/` 
+- Importación directa en archivos MDX
+
+### Cómo implementar `<Image />` en archivos MDX
+
+**1. Convierte tu archivo `.md` a `.mdx`:**
+```bash
+# Renombra el archivo
+mv src/content/projects/YourProject.md src/content/projects/YourProject.mdx
+```
+
+**2. Agrega las importaciones al principio del archivo:**
+```mdx
+import { Image } from 'astro:assets';
+import projectImage from '../assets/images/projects/YourProject/image.jpg';
+import anotherImage from '../assets/images/projects/YourProject/another.jpg';
+```
+
+**3. Reemplaza las etiquetas `<img>` por `<Image />`:**
+```mdx
+<!-- Antes -->
+<img src="/assets/images/projects/YourProject/image.jpg" alt="Descripción" class="w-full" />
+
+<!-- Ahora -->
+<Image 
+  src={projectImage} 
+  alt="Descripción" 
+  class="w-full" 
+  width={800} 
+  height={600} 
+/>
+```
+
+**4. Para imágenes con zoom (recomendado):**
+```mdx
+import ImageZoom from '../components/ImageZoom.astro';
+
+<ImageZoom 
+  src={projectImage} 
+  alt="Descripción" 
+  class="w-full rounded-lg shadow-lg" 
+/>
+```
+
+### Ventajas de este método
+
+- **Rendimiento:** Imágenes hasta 80% más ligeras con WebP
+- **SEO:** Mejores tiempos de carga
+- **Responsive:** Tamaños automáticos según dispositivo
+- **Accesibilidad:** Lazy loading y atributos optimizados
+
+---
+
+## 12) Estructura Grid para imágenes múltiples
+
+### Para mostrar imágenes lado a lado
+
+Usa el sistema de grid de Tailwind CSS para organizar múltiples imágenes:
+
+```mdx
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+  <figure class="m-0">
+    <ImageZoom src={image1} alt="Descripción 1" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video" />
+    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Pie de foto 1</figcaption>
+  </figure>
+  <figure class="m-0">
+    <ImageZoom src={image2} alt="Descripción 2" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video" />
+    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Pie de foto 2</figcaption>
+  </figure>
+</div>
+```
+
+### Opciones de grid comunes
+
+**2 columnas (móvil 1, escritorio 2):**
+```html
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+```
+
+**3 columnas (móvil 1, tablet 2, escritorio 3):**
+```html
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+```
+
+**4 columnas (móvil 2, escritorio 4):**
+```html
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+```
+
+**Auto-fit (adaptable según ancho disponible):**
+```html
+<div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
+```
+
+### Clases útiles para imágenes en grid
+
+- `object-cover`: Mantiene proporción cubriendo el contenedor
+- `object-contain`: Mantiene proporción sin recortar
+- `aspect-video`: Relación 16:9
+- `aspect-square`: Relación 1:1
+- `w-full h-auto`: Ancho completo, altura automática
+
+---
+
+## 13) Funcionalidad de Zoom (Lightbox)
+
+### Cómo funciona el zoom automático
+
+Todas las imágenes usando el componente `ImageZoom` tienen zoom automático:
+
+- **Click en imagen:** Abre modal con versión ampliada
+- **Click fuera o Escape:** Cierra el modal
+- **Responsive:** Se adapta al tamaño de pantalla
+- **Animaciones:** Transiciones suaves al abrir/cerrar
+
+### Implementación
+
+**1. Importa el componente:**
+```mdx
+import ImageZoom from '../components/ImageZoom.astro';
+```
+
+**2. Úsalo en lugar de `<img>` o `<Image />`:**
+```mdx
+<ImageZoom 
+  src={yourImage} 
+  alt="Descripción" 
+  class="w-full rounded-lg shadow-lg" 
+/>
+```
+
+### Estilos aplicados automáticamente
+
+- **Cursor:** `cursor: zoom-in` en hover
+- **Efecto hover:** Ligera escala (`scale(1.05)`)
+
+---
+
+## 14) Estructura unificada para imágenes en proyectos
+
+### Plantilla estándar para imágenes individuales
+
+Para mantener consistencia visual y funcional en todos los proyectos, usa esta estructura para **todas las imágenes del cuerpo del proyecto** (excepto la imagen de portada del frontmatter):
+
+```html
+<figure class="my-8">
+  <img src="/assets/images/projects/YourProject/image.jpg" alt="Descripción detallada y accesible de lo que muestra la imagen" class="w-full rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Título descriptivo de la imagen en formato de pie de foto.</figcaption>
+</figure>
+```
+
+### Componentes de la estructura
+
+**1. Contenedor `<figure>`:**
+- `class="my-8"`: Margen vertical consistente (3rem arriba y abajo)
+
+**2. Imagen `<img>`:**
+- `src`: Ruta absoluta desde `/assets/images/projects/`
+- `alt`: Descripción detallada para accesibilidad y SEO
+- `class="w-full rounded-lg shadow-lg"`: 
+  - `w-full`: Ancho completo del contenedor
+  - `rounded-lg`: Bordes redondeados consistentes
+  - `shadow-lg`: Sombra sutil para profundidad
+
+**3. Caption `<figcaption>`:**
+- `class="text-sm text-center mt-2 text-gray-500 italic"`:
+  - `text-sm`: Tamaño de fuente pequeño
+  - `text-center`: Centrado horizontal
+  - `mt-2`: Margen superior pequeño
+  - `text-gray-500`: Color gris suave
+  - `italic`: Texto en cursiva
+
+### Ejemplos de uso
+
+**Imagen simple:**
+```html
+<figure class="my-8">
+  <img src="/assets/images/projects/FrankenHand/FrankenHand3.jpg" alt="FrankenHand gameplay screenshot showing the 2D hand character in a 3D gothic environment" class="w-full rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">FrankenHand in action: 2D protagonist navigating through 3D gothic environments.</figcaption>
+</figure>
+```
+
+**GIF/Animación:**
+```html
+<figure class="my-8">
+  <img src="/assets/images/projects/FrankenHand/HiddingHand.gif" alt="Dynamic outline system demonstration showing the hand character becoming visible and invisible with the custom shader" class="w-full rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Dynamic Outline System: Real-time depth adjustments for 2D character visibility.</figcaption>
+</figure>
+```
+
+### Imágenes en grid (múltiples imágenes)
+
+Para mostrar múltiples imágenes lado a lado, usa el grid envolviendo las figuras individuales:
+
+```html
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+  <figure class="m-0">
+    <img src="/assets/images/projects/FrankenHand/FrankenHand4.jpg" alt="Descripción imagen 1" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video">
+    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Pie de foto 1</figcaption>
+  </figure>
+  <figure class="m-0">
+    <img src="/assets/images/projects/FrankenHand/FrankenHand5.jpg" alt="Descripción imagen 2" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video">
+    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Pie de foto 2</figcaption>
+  </figure>
+</div>
+```
+
+**Diferencias clave en grid:**
+- `<figure>` usa `class="m-0"` para eliminar márgenes individuales
+- `<img>` usa `shadow-md` en lugar de `shadow-lg` (sombra más sutil)
+- Se agregan `object-cover aspect-video` para mantener proporciones consistentes
+
+### Reglas de aplicación
+
+1. **Imágenes de portada**: No usan `<figure>` ni `<figcaption>` (definidas en frontmatter)
+2. **Imágenes del cuerpo**: Siempre usan la estructura unificada
+3. **Grids**: Usan clases específicas para optimización visual
+4. **Consistencia**: Mantén el mismo estilo en todos los proyectos
+
+### Beneficios
+
+- **Consistencia visual**: Todas las imágenes tienen el mismo aspecto
+- **Accesibilidad**: Alt text descriptivo y estructura semántica
+- **Responsive**: Adaptable a diferentes tamaños de pantalla
+- **Mantenimiento**: Fácil de actualizar y mantener
+
+---
+
+## 15) Botón "Back to Top" (Volver arriba)
+
+### Descripción del componente
+
+Se ha implementado un botón flotante "Back to Top" para mejorar la navegación en páginas largas como proyectos y posts individuales.
+
+### Características
+
+- **Posición fija**: Bottom-right corner (`bottom-8 right-8`)
+- **Aparición inteligente**: Solo visible después de hacer scroll 300px
+- **Animación suave**: Scroll animado con easing ease-out (500ms)
+- **Efectos hover**: Scale y color transitions
+- **Accesibilidad**: Aria labels y tooltips
+- **Responsive**: Visible en todos los dispositivos
+
+### Implementación técnica
+
+**Componente**: `src/components/BackToTop.astro`
+
+**Funcionamiento**:
+```javascript
+// Aparece después de 300px de scroll
+const scrollThreshold = 300;
+
+// Animación smooth scroll con easing
+function scrollToTop() {
+  const duration = 500;
+  const easeOut = 1 - Math.pow(1 - progress, 3);
+}
+```
+
+**Estilos principales**:
+```css
+fixed bottom-8 right-8 z-50 p-3 
+bg-neutral-800 dark:bg-neutral-700 
+text-white rounded-full shadow-lg 
+hover:bg-neutral-700 dark:hover:bg-neutral-600 
+transition-all duration-300 
+opacity-0 invisible hover:scale-110
+```
+
+### Uso en páginas
+
+El componente se importa y se agrega al final del `<body>`:
+
+```astro
+---
+import BackToTop from "../../components/BackToTop.astro";
+---
+
+<html>
+  <!-- ... contenido ... -->
+  <body>
+    <!-- ... contenido ... -->
+    <Footer />
+    <BackToTop />
+  </body>
+</html>
+```
+
+### Páginas con el botón implementado
+
+- ✅ `src/pages/projects/[slug].astro` - Detalles de proyectos
+- ✅ `src/pages/posts/[slug].astro` - Detalles de posts
+
+### Comportamiento esperado
+
+1. **Estado inicial**: Invisible (`opacity-0 invisible`)
+2. **Scroll > 300px**: Aparece con fade-in (`opacity-100 visible`)
+3. **Click**: Scroll suave hacia arriba con animación
+4. **Hover**: Efecto scale (+10%) y cambio de color
+
+### Personalización
+
+Para ajustar el comportamiento:
+
+- **Scroll threshold**: Modificar `scrollThreshold` en el script
+- **Posición**: Cambiar clases `bottom-*` y `right-*`
+- **Animación**: Ajustar `duration` en `scrollToTop()`
+- **Colores**: Modificar clases `bg-*` y `hover:bg-*`
+
+---
+
+## 16) Regla de mantenimiento de esta guía
 
 De ahora en adelante:
 
 - Si un cambio impacta estructura, layout, responsive, componentes globales o flujo de contenido,
-  se debe actualizar este documento en la misma iteracion.
-
+  se debe actualizar este documento en la misma iteración.

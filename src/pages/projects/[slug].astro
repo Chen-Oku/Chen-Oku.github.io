@@ -1,6 +1,7 @@
 ---
 import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
+import BackToTop from "../../components/BackToTop.astro";
 import { getProjectBySlug, getAllProjectSlugs } from "../../utils/getProjects";
 
 export async function getStaticPaths() {
@@ -258,5 +259,6 @@ const { frontmatter, Content } = project;
     </main>
 
     <Footer />
+    <BackToTop />
   </body>
 </html>

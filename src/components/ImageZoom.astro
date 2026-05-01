@@ -1,0 +1,95 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  width?: number;
+  height?: number;
+}
+
+const { src, alt, class: className = "", width, height } = Astro.props;
+---
+
+<div class="image-zoom-container relative inline-block {className}">
+  <img 
+    src={src} 
+    alt={alt}
+    class={className}
+    {width}
+    {height}
+    loading="lazy"
+  />
+</div>
+
+<style>
+  .image-zoom-container {
+    cursor: zoom-in;
+  }
+  
+  .image-zoom-container img {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .image-zoom-container:hover img {
+    transform: scale(1.05);
+  }
+</style>
+
+<script>
+  function setupZoom() {
+    let zoomOverlay: HTMLDivElement | null = null;
+    
+    function createOverlay() {
+      zoomOverlay = document.createElement('div');
+      zoomOverlay.className = 'fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center cursor-zoom-out hidden';
+      document.body.appendChild(zoomOverlay);
+      
+      zoomOverlay.addEventListener('click', closeZoom);
+    }
+    
+    function openZoom(img: HTMLImageElement) {
+      if (!zoomOverlay) createOverlay();
+      
+      const zoomedImg = document.createElement('img');
+      zoomedImg.src = img.src;
+      zoomedImg.alt = img.alt;
+      zoomedImg.className = 'max-w-[90vw] max-h-[90vh] object-contain';
+      
+      zoomOverlay!.innerHTML = '';
+      zoomOverlay!.appendChild(zoomedImg);
+      zoomOverlay!.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeZoom() {
+      if (zoomOverlay) {
+        zoomOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+    
+    // Add click handlers to all zoomable images
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const container = target.closest('.image-zoom-container');
+      
+      if (container) {
+        const img = container.querySelector('img') as HTMLImageElement;
+        if (img) {
+          e.preventDefault();
+          openZoom(img);
+        }
+      }
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeZoom();
+      }
+    });
+  }
+  
+  // Run when DOM is ready
+  document.addEventListener('DOMContentLoaded', setupZoom);
+</script>

@@ -3,7 +3,7 @@ title: "Frankenhand (Demo)- A 2D/3D Puzzle Platformer"
 description: "A narrative platformer where a severed hand defies its creator. I acted as Development Team Lead, Technical Artist, and UI Designer."
 date: "2025-06-15"
 status: "Completed"
-image: "/assets/images/projects/FrankenHand/FrankenHand.png"
+image: "/assets/images/projects/FrankenHand/FrankenHand.jpg"
 slug: "FrankenHand"
 demoUrl: "https://chenoku.itch.io/frankenhand"
 repoUrl: "https://github.com/Chen-Oku/FrankenHand"
@@ -19,9 +19,12 @@ tags:
 
 >*"A severed hand, a life instinct and a destiny that defies creation."* 
 
-**FrankenHand** is a gothic, colorful thriller platformer inspired by the classic Frankenstein tale, but with a twist: the spotlight is on a forgotten, severed limb. After his creature’s break out from Dr. Frankenstein's lab, a piece is left behind… a severed hand, scared but with a clear decision.
+**FrankenHand** is a gothic, colorful thriller platformer inspired by the classic Frankenstein tale, but with a twist: the spotlight is on a forgotten, severed limb. After his creature's break out from Dr. Frankenstein's lab, a piece is left behind… a severed hand, scared but with a clear decision.
 
-![Captura ING](/assets/images/projects/FrankenHand/FrankenHand3.jpg)
+<figure class="my-8">
+  <img src="/assets/images/projects/FrankenHand/FrankenHand3.jpg" alt="FrankenHand gameplay screenshot showing the 2D hand character in a 3D gothic environment" class="w-4/5 mx-auto rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">FrankenHand in action: 2D protagonist navigating through 3D gothic environments.</figcaption>
+</figure>
 
 ## Overview
 
@@ -56,7 +59,10 @@ switch (outlineMode)
 }
 ```
 
-![Captura Outline Hidding Hand](/assets/images/projects/FrankenHand/HiddingHand.gif)
+<figure class="my-8">
+  <img src="/assets/images/projects/FrankenHand/HiddingHand.gif" alt="Dynamic outline system demonstration showing the hand character becoming visible and invisible with the custom shader" class="w-3/5 mx-auto rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Dynamic Outline System: Real-time depth adjustments for 2D character visibility.</figcaption>
+</figure>
 
 This approach allowed us to create distinct rendering states giving the player perfect spatial awareness. I complemented this technical solution with a lighting strategy that contrasts warm general lighting with cold tones, naturally attracting the player's eye to elements of interest.
 
@@ -101,14 +107,39 @@ Beyond the core controller, I led the development of several mechanics to bring 
 * **Hazard Systems:** I developed a warning system where falling bottles project a shadow on the ground before impact, allowing the player to dodge in time.
 * **Enemy States:** I created paralyzing mechanics for the cockroaches; if they get too close, the hand freezes temporarily, hindering movement.
 
-![Captura botella al caer](/assets/images/projects/FrankenHand/FallingBottle.gif)
+<figure class="my-8">
+  <img src="/assets/images/projects/FrankenHand/FallingBottle.gif" alt="Hazard system in action showing a bottle falling with shadow projection warning" class="w-3/5 mx-auto rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Environmental Hazards: Shadow projection system warning players of falling dangers.</figcaption>
+</figure>
 
 #### 3. UI/UX Design
 As the UI Designer, I created a completely 2D user interface. A major part of the narrative relies on finding notes from Dr. Frankenstein. I programmed a pop-up system for these diary fragments that allows players to uncover the lore seamlessly without interrupting fast-paced moments, such as the final escape sequence from the cat.
 
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
+  <figure class="m-0">
+    <img src="/assets/images/projects/FrankenHand/MainMenu.gif" alt="Animated 2D purple book opening to reveal the Frankenhand main menu" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video">
+    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Diegetic Main Menu: Interactive 2D book setting the narrative tone.</figcaption>
+  </figure>
+
+  <figure class="m-0">
+    <img src="/assets/images/projects/FrankenHand/FHInventory.jpg" alt="2D illustrated book interface displaying an inventory grid, a collected key, and lore text" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video">
+    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Inventory Hub: Custom 2D interface to review items and lore.</figcaption>
+  </figure>
+
+  <figure class="m-0">
+    <img src="/assets/images/projects/FrankenHand/Notes.gif" alt="Gameplay animation of a 2D parchment note popping up smoothly on screen" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video">
+    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Non-Intrusive Lore: Pop-ups reveal the story without breaking flow.</figcaption>
+  </figure>
+
+  <figure class="m-0">
+    <img src="/assets/images/projects/FrankenHand/FHInteract.jpg" alt="Severed hand character next to a highlighted book with a UI prompt reading Press J to Push" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video">
+    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Contextual UI Prompts: Clean button prompts for interactable objects.</figcaption>
+  </figure>
+</div>
+
 ### Leadership & Soft Skills
 
-Working on FrankenHand was a deeply collaborative experience. The art team pitched the 2D-in-3D concept without knowing exactly how it would work, and there wasn’t a predefined path. 
+Working on FrankenHand was a deeply collaborative experience. The art team pitched the 2D-in-3D concept without knowing exactly how it would work, and there wasn't a predefined path. 
 
 Artists and developers joined forces, and as the Development Lead, I helped build the workflow to make it happen.
 

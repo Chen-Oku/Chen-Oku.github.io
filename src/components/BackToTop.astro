@@ -1,0 +1,75 @@
+---
+// Back to Top Button Component - Simple Version
+---
+
+<button
+  id="back-to-top"
+  class="fixed bottom-8 right-8 z-50 p-3 bg-neutral-800 dark:bg-neutral-700 text-white rounded-full shadow-lg hover:bg-neutral-700 dark:hover:bg-neutral-600 transition-all duration-300 hover:scale-110 group"
+  aria-label="Back to top"
+  title="Back to top"
+>
+  <svg
+    class="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-1"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M5 10l7-7m0 0l7 7m-7-7v18"
+    />
+  </svg>
+</button>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const backToTopButton = document.getElementById("back-to-top");
+    
+    if (!backToTopButton) {
+      console.log("Back to Top button not found");
+      return;
+    }
+
+    console.log("Back to Top button found and ready");
+
+    // Smooth scroll to top using the correct scroll target
+    backToTopButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      
+      // Get the actual scroll position (document.body.scrollTop in this case)
+      const startPosition = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset;
+      
+      if (startPosition === 0) return;
+      
+      // Smooth scroll animation
+      const startTime = performance.now();
+      const duration = 800; // 800ms for smooth animation
+      
+      function animateScroll(currentTime: number) {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        
+        // Easing function (ease-in-out for smooth feel)
+        const easeInOut = progress < 0.5 
+          ? 2 * progress * progress 
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        
+        const currentPosition = startPosition * (1 - easeInOut);
+        
+        // Apply scroll to the correct target (document.body)
+        document.body.scrollTop = currentPosition;
+        document.documentElement.scrollTop = currentPosition; // Fallback
+        
+        // Continue animation if not complete
+        if (progress < 1) {
+          requestAnimationFrame(animateScroll);
+        }
+      }
+      
+      // Start the animation
+      requestAnimationFrame(animateScroll);
+    }, { passive: false });
+  });
+</script>
