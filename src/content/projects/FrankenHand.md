@@ -151,7 +151,7 @@ Artists and developers joined forces, and as the Development Lead, I helped buil
   <a href="https://github.com/Chen-Oku/FrankenHand" target="_blank" class="px-6 py-3 bg-cyan-800 text-white font-bold rounded-lg hover:bg-zinc-700 transition-colors no-underline">
     💻 View Source on GitHub
   </a>
-  <a href="https://www.canva.com/design/DAGpjDjwRWo/BJMhdu7qZ4bPBcFqv9V1nQ/edit" target="_blank" class="px-6 py-3 bg-purple-800 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors no-underline">
+  <a href="https://canva.link/md3tk76gaz508z0" target="_blank" class="px-6 py-3 bg-purple-800 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors no-underline">
     📊 Check out our Pitch Deck
   </a>
 </div>

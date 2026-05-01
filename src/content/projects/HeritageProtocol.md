@@ -3,7 +3,7 @@ title: "HeritageProtocol (Demo)- Sci-Fi Exploration & Puzzle Game"
 description: "A sci-fi puzzle exploration game. I served as Development Lead, Technical Artist, and Gameplay Programmer, focusing on advanced custom shaders and interaction systems."
 date: "2025-12-25"
 status: "Completed"
-image: "assets/images/projects/HeritageProtocol/HeritageProtocol.jpg"
+image: "/assets/images/projects/HeritageProtocol/HeritageProtocol.jpg"
 slug: "HeritageProtocol"
 demoUrl: "https://chenoku.itch.io/heritageprotocol"
 repoUrl: "https://github.com/Chen-Oku/HeritageProtocol/tree/M-Branch"
@@ -20,8 +20,18 @@ tags:
 >Uncover the secrets of the past through the lens of advanced technology. **Heritage Protocol** is a sci-fi exploration and puzzle game that challenges players to uncover hidden truths within an ancient, abandoned facility. By using advanced tech tools, players interact with the environment to reveal concealed messages, solve spatial puzzles, and piece together a forgotten history.
 
 <figure class="my-8">
-  <img src="/assets/images/projects/HeritageProtocol/HeroShot.jpg" alt="Heritage Protocol gameplay screenshot showing the stylized sci-fi environment" class="w-4/5 mx-auto rounded-lg shadow-lg">
-  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Heritage Protocol in action: Exploring the abandoned facility using advanced visual tech.</figcaption>
+  <video 
+    controls 
+    playsinline 
+    poster="/assets/images/projects/HeritageProtocol/HeritageMainMenu.jpg" 
+    aria-label="Official gameplay trailer for Heritage Protocol" 
+    class="w-full rounded-lg shadow-lg"
+  >
+    <source src="/assets/images/projects/HeritageProtocol/TrailerHeritageProtocol.mp4" type="video/mp4">
+    Your browser does not support the video tag. This is the official gameplay trailer for Heritage Protocol.
+  </video>
+  
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Heritage Protocol - Official Gameplay Trailer</figcaption>
 </figure>
 
 ## Overview
@@ -31,7 +41,7 @@ tags:
 
 In this project, I stepped into the role of **Development Team Lead**, while heavily focusing on **Technical Art** and **Gameplay Programming**.
 
-The main challenge was visual communication: the game requiered a distinct stylized look and complex incicate interactable objects, hidden secrets and story progression. To achieve this, I built a robust library of custom shaders using Unity’s Shader Graph and integrated them seamlessly with C# gameplay systems.
+The main challenge was visual communication: the game required a distinct stylized look and complex visual feedback to indicate interactable objects, hidden secrets and story progression. To achieve this, I built a robust library of custom shaders using Unity’s Shader Graph and integrated them seamlessly with C# gameplay systems.
 
 ### Technical Deep Dive
 
@@ -69,13 +79,18 @@ if (Physics.Raycast(ray, out RaycastHit hit))
 #### The Shader Graph Implementation
 The C# script passes this dynamically generated mask _DarkTex to a custom Shader Graph I developed. The shader uses the mask's values to interpolate between the dirt material and the clean surface seamlessly.
 
+<figure class="my-8">
+  <img src="/assets/images/projects/HeritageProtocol/HeritageSurfaceReveal.gif" alt="Surface reveal mechanic demonstration showing the dirt surface being cleaned by light" class="w-3/5 mx-auto rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Surface Reveal Mechanic: Players use light to uncover hidden information.</figcaption>
+</figure>
 
 <figure class="my-8">
-  <img src="/assets/images/projects/FrankenHand/HiddingHand.gif" alt="Dynamic outline system demonstration showing the hand character becoming visible and invisible with the custom shader" class="w-3/5 mx-auto rounded-lg shadow-lg">
-  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Dynamic Outline System: Real-time depth adjustments for 2D character visibility.</figcaption>
+  <img src="/assets/images/projects/HeritageProtocol/ShaderDirty.jpg" alt="Shader graph for dirt material" class="w-3/5 mx-auto rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Shader Graph for Dirt Material: Custom shader for the surface reveal mechanic.</figcaption>
 </figure>
 
 #### 2. Gameplay Programming: Events & Systems
+
 ##### Proximity-Based Fading Statues
 A key mission required players to inspect four mysterious statues. To make this encounter feel eerie and supernatural, I programmed a proximity system where the statues gradually dissolve and fade away as the player approaches them, eventually triggering the next quest phase.
 
@@ -113,9 +128,18 @@ private IEnumerator HideAfterDelay(float seconds)
     }
 }
 ```
-##### The Shader Graph Setup
+#### The Shader Graph Setup
 The visual aspect of the fade was built in Shader Graph. It takes the _Dissolve float from the C# script and subtracts it from a generated Simple Noise node. This result is fed into the material's Alpha Clip threshold, while also generating a glowing emissive edge along the clipping border to enhance the sci-fi aesthetic.
 
+<figure class="my-8">
+  <img src="/assets/images/projects/HeritageProtocol/HeritageSculptureDissolve.gif" alt="Dissolve effect demonstration showing statues fading away" class="w-3/5 mx-auto rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Sculpture Dissolve Effect: Sci-fi aesthetic with glowing edge and clipping border.</figcaption>
+</figure>
+
+<figure class="my-8">
+  <img src="/assets/images/projects/HeritageProtocol/ShaderDissolve.jpg" alt="Shader graph for dissolve effect" class="w-3/5 mx-auto rounded-lg shadow-lg">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Shader Graph for Dissolve Effect: Custom shader for the sculpture dissolve mechanic.</figcaption>
+</figure>
 
 #### Additional Systems Engineered
 * **Beyond the shaders**: I engineered the underlying logic for the game's core progression systems:
@@ -136,13 +160,13 @@ Managing the pipeline between the 3D modeling team, animators, and programmers r
 
 ### Try it out
 <div class="flex flex-wrap gap-4 mt-6 mb-8">
-  <a href="https://chenoku.itch.io/frankenhand" target="_blank" class="px-6 py-3 bg-purple-800 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors no-underline">
+  <a href="https://chenoku.itch.io/HeritageProtocol" target="_blank" class="px-6 py-3 bg-[#54abb2] text-white font-bold rounded-lg hover:bg-[#66cfd8] transition-colors no-underline">
     🎮 Play the Demo on Itch.io
   </a>
-  <a href="https://github.com/Chen-Oku/FrankenHand" target="_blank" class="px-6 py-3 bg-cyan-800 text-white font-bold rounded-lg hover:bg-zinc-700 transition-colors no-underline">
+  <a href="https://github.com/Chen-Oku/HeritageProtocol/tree/M-Branch" target="_blank" class="px-6 py-3 bg-cyan-800 text-white font-bold rounded-lg hover:bg-zinc-700 transition-colors no-underline">
     💻 View Source on GitHub
   </a>
-  <a href="https://www.canva.com/design/DAGpjDjwRWo/BJMhdu7qZ4bPBcFqv9V1nQ/edit" target="_blank" class="px-6 py-3 bg-purple-800 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors no-underline">
+  <a href="https://canva.link/f7k451wh9u8k06c" target="_blank" class="px-6 py-3 bg-[#54abb2] text-white font-bold rounded-lg hover:bg-[#66cfd8] transition-colors no-underline">
     📊 Check out our Pitch Deck
   </a>
 </div>
