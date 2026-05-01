@@ -1,12 +1,12 @@
 ---
-title: "Frankenhand (Demo)- A 2D/3D Puzzle Platformer"
+title: "HeritageProtocol (Demo)"
 description: "A narrative platformer where a severed hand defies its creator. I acted as Development Team Lead, Technical Artist, and UI Designer."
 date: "2025-06-15"
 status: "Completed"
-image: "/assets/images/projects/FrankenHand/FrankenHand.png"
-slug: "FrankenHand"
-demoUrl: "https://chenoku.itch.io/frankenhand"
-repoUrl: "https://github.com/Chen-Oku/FrankenHand"
+image: "/assets/images/projects/HeritageProtocol/HeritageProtocol.png"
+slug: "HeritageProtocol"
+demoUrl: "https://chenoku.itch.io/"
+repoUrl: "https://github.com/Chen-Oku/HeritageProtocol/tree/M-Branch"
 tags:
   - Unity
   - Technical Art
@@ -17,7 +17,7 @@ tags:
 
 # FrankenHand
 
->*"A severed hand, a life instinct and a destiny that defies creation."* 
+*"A severed hand, a life instinct and a destiny that defies creation."* 
 
 **FrankenHand** is a gothic, colorful thriller platformer inspired by the classic Frankenstein tale, but with a twist: the spotlight is on a forgotten, severed limb. After his creature’s break out from Dr. Frankenstein's lab, a piece is left behind… a severed hand, scared but with a clear decision.
 
@@ -60,16 +60,16 @@ switch (outlineMode)
 
 This approach allowed us to create distinct rendering states giving the player perfect spatial awareness. I complemented this technical solution with a lighting strategy that contrasts warm general lighting with cold tones, naturally attracting the player's eye to elements of interest.
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-8">
-  <figure class="m-0">
-    <img src="/assets/images/projects/FrankenHand/FrankenHand4.jpg" alt="Frankenhand Cold Ambient Lighting" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video">
-    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Setting the Mood: Cold cyan tones for a gothic atmosphere.</figcaption>
-  </figure>
-  <figure class="m-0">
-    <img src="/assets/images/projects/FrankenHand/FrankenHand5.jpg" alt="Frankenhand Warm Focal Lighting" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video">
-    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Guiding the Player: Fuchsia tones highlight key focal points.</figcaption>
-  </figure>
-</div>
+<figure>
+  <img src="/assets/images/projects/FrankenHand/FrankenHand4.jpg" alt="Frankenhand Cold Ambient Lighting">
+  <figcaption>*A nocturnal setting where warm light sources pierce the darkness, establishing a tense, gothic atmosphere.*</figcaption>
+</figure>
+
+
+<figure>
+  <img src="/assets/images/projects/FrankenHand/FrankenHand5.jpg" alt="Frankenhand Warm Focal Lighting">
+  <figcaption>*Fuchsia tones are strategically used to highlight key focal points and interactive elements, while volumetric fog enhances the environmental ambiance.*</figcaption>
+</figure>
 
 #### 2. Gameplay Programming: Architecture & Systems
 
@@ -113,14 +113,6 @@ Working on FrankenHand was a deeply collaborative experience. The art team pitch
 Artists and developers joined forces, and as the Development Lead, I helped build the workflow to make it happen.
 
 ### Try it out
-<div class="flex flex-wrap gap-4 mt-6 mb-8">
-  <a href="https://chenoku.itch.io/frankenhand" target="_blank" class="px-6 py-3 bg-purple-800 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors no-underline">
-    🎮 Play the Demo on Itch.io
-  </a>
-  <a href="https://github.com/Chen-Oku/FrankenHand" target="_blank" class="px-6 py-3 bg-cyan-800 text-white font-bold rounded-lg hover:bg-zinc-700 transition-colors no-underline">
-    💻 View Source on GitHub
-  </a>
-  <a href="https://www.canva.com/design/DAGpjDjwRWo/BJMhdu7qZ4bPBcFqv9V1nQ/edit" target="_blank" class="px-6 py-3 bg-purple-800 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors no-underline">
-    📊 Check out our Pitch Deck
-  </a>
-</div>
+* [**View Source Code on GitHub**](https://github.com/Chen-Oku/FrankenHand)
+* [**Play the Demo from Itch.io**](https://chenoku.itch.io/frankenhand)
+* [**Check out our Pitch Deck**](https://www.canva.com/design/DAGpjDjwRWo/BJMhdu7qZ4bPBcFqv9V1nQ/edit)
