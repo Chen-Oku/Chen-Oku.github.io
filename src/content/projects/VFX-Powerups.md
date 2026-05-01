@@ -1,10 +1,10 @@
 ---
-title: "Checkpoint4 - Power-Ups VFX in Unity"
+title: "VFX Power-Ups in Unity"
 description: "Third-person Unity project focused on interactive power-ups with custom shaders and synchronized particle effects."
 date: "2026-04-25"
 status: "Completed"
 image: "/assets/images/projects/project2.jpg"
-slug: "checkpoint4-powerups-vfx"
+slug: "VFX-Powerups"
 demoUrl: ""
 repoUrl: "https://github.com/Chen-Oku/Checkpoint4"
 tags:
@@ -15,7 +15,7 @@ tags:
   - URP
 ---
 
-# Checkpoint4 - Power-Ups VFX in Unity
+# VFX Power-Ups in Unity
 
 Academic real-time graphics project focused on a third-person character that interacts with three power-up objects.
 

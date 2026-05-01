@@ -9,6 +9,7 @@ const allMarkdownModules = import.meta.glob<{
     demoUrl?: string;
     repoUrl?: string;
     tags?: string[];
+    video?: string;
   };
   default: any;
 }>("../content/projects/*.md", { eager: true });
@@ -23,6 +24,7 @@ export interface Project {
   demoUrl?: string;
   repoUrl?: string;
   tags: string[];
+  video?: string;
   href: string;
 }
 
@@ -50,6 +52,7 @@ export function getAllProjects(): Project[] {
       demoUrl: frontmatter.demoUrl,
       repoUrl: frontmatter.repoUrl,
       tags: frontmatter.tags || [],
+      video: frontmatter.video,
       href: `/projects/${slug}`,
     });
   }
@@ -74,6 +77,7 @@ export function getProjectBySlug(slug: string): {
     demoUrl?: string;
     repoUrl?: string;
     tags?: string[];
+    video?: string;
   };
   Content: any;
   slug: string;

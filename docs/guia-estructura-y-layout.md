@@ -193,7 +193,176 @@ Se aplicaron ajustes para mejorar adaptabilidad en movil/tablet/escritorio:
 
 ---
 
-## 10) Regla de mantenimiento de esta guia
+## 10) Como agregar imagenes, videos y codigo en posts/proyectos
+
+### A. Imagenes en el contenido Markdown
+
+Para agregar imagenes dentro del cuerpo de un post o proyecto, usa la sintaxis estandar de Markdown:
+
+```markdown
+![Descripcion de la imagen](/assets/images/projects/YourProject/image.jpg)
+```
+
+**Importante:**
+- La ruta debe comenzar con `/` (ruta absoluta desde `public/`)
+- Respeta la sensibilidad a mayusculas/minusculas en nombres de carpetas
+- Coloca tus imagenes en `public/assets/images/projects/` o `public/assets/images/posts/`
+
+### B. Videos
+
+Hay dos formas de agregar videos:
+
+**1. Video en el header (frontmatter):**
+Agrega el campo `video` en el frontmatter del archivo `.md`:
+
+```yaml
+---
+title: "Mi Proyecto"
+video: "/assets/videos/YourProject/demo.mp4"
+---
+```
+
+El video aparecera automaticamente debajo de la imagen de portada en la pagina de detalle.
+
+**2. Video en el contenido:**
+Usa el tag HTML5 `<video>` directamente en el Markdown:
+
+```html
+<video src="/assets/videos/YourProject/demo.mp4" controls>
+  Tu navegador no soporta videos.
+</video>
+```
+
+**Estructura de carpetas para videos:**
+- Proyectos: `public/assets/videos/YourProject/`
+- Posts: `public/assets/videos/YourPost/`
+
+### C. Bloques de codigo
+
+Para agregar segmentos de codigo, usa la sintaxis estandar de Markdown con triple backticks:
+
+```markdown
+```csharp
+void Start() {
+    Debug.Log("Hola Mundo");
+}
+```
+```
+
+Los bloques de codigo tienen estilos automaticos:
+- Fondo oscuro para bloques multilinea
+- Colores diferenciados para codigo inline (modo claro/oscuro)
+- Bordes redondeados y scroll horizontal cuando es necesario
+
+### D. Captions (pies de foto) para imagenes, videos y GIFs
+
+Para agregar captions o descripciones debajo de imagenes, videos o GIFs, usa los tags HTML5 `<figure>` y `<figcaption>`:
+
+**Para imagenes:**
+```html
+<figure>
+  <img src="/assets/images/projects/YourProject/image.jpg" alt="Descripcion para accesibilidad">
+  <figcaption>Descripcion o pie de foto de la imagen</figcaption>
+</figure>
+```
+
+**Nota importante:** El atributo `alt` en el tag `<img>` es equivalente al texto en `![Texto](ruta)` de Markdown. Debe siempre incluirse para:
+- Accesibilidad (lectores de pantalla)
+- Respaldo si el HTML no se renderiza correctamente
+- SEO y descripción del contenido
+
+**Para videos:**
+```html
+<figure>
+  <video src="/assets/videos/YourProject/demo.mp4" controls>
+    Tu navegador no soporta videos.
+  </video>
+  <figcaption>Descripcion del video o contexto</figcaption>
+</figure>
+```
+
+**Para GIFs (tratados como imagenes):**
+```html
+<figure>
+  <img src="/assets/images/projects/YourProject/animation.gif" alt="Animacion">
+  <figcaption>Descripcion de la animacion o GIF</figcaption>
+</figure>
+```
+
+**Estilos aplicados automaticamente:**
+- El caption aparece centrado debajo del media
+- Texto en italico y color gris (mas claro en modo oscuro)
+- Margen apropiado entre el media y el caption
+- El media se centra automaticamente
+
+### E. Crear nuevos proyectos/posts
+
+**Para proyectos:**
+1. Copia cualquier archivo de `src/content/projects/*.md`
+2. Cambia el `slug` en el frontmatter (debe ser unico)
+3. Actualiza los campos: `title`, `description`, `date`, `status`, `image`, `tags`
+4. Opcional: agrega `video`, `demoUrl`, `repoUrl`
+5. Escribe el contenido en Markdown con imagenes, videos y codigo
+
+**Para posts:**
+1. Copia cualquier archivo de `src/content/posts/*.md`
+2. Cambia el `slug` en el frontmatter (debe ser unico)
+3. Actualiza los campos: `title`, `description`, `date`, `readTime`, `image`
+4. Opcional: agrega `video`
+5. Escribe el contenido en Markdown
+
+**Regla critica:** Cada proyecto/post debe tener un `slug` unico. Si duplicas un archivo sin cambiar el slug, ambos mostraran el mismo contenido.
+
+To create a new project:
+
+1. **Copy this file** to create a new `.md` file in `src/content/projects/`
+2. **Update the frontmatter** with your project details:
+   - `title`: Project name
+   - `description`: Short description
+   - `date`: Publication date (YYYY-MM-DD)
+   - `status`: "Completed", "In progress", etc.
+   - `image`: Path to cover image (e.g., `/assets/images/projects/YourProject/image.png`)
+   - `slug`: Unique URL identifier (must be unique per project)
+   - `demoUrl`: Optional live demo link
+   - `repoUrl`: Optional repository link
+   - `tags`: Array of tags
+   - `video`: Optional path to video file (e.g., `/assets/videos/YourProject/demo.mp4`)
+
+3. **Add images** to your content using standard Markdown syntax:
+   ```markdown
+   ![Alt text](/assets/images/projects/YourProject/image.jpg)
+   ```
+
+4. **Add videos** in frontmatter (for header video) or embed in content:
+   - Frontmatter: `video: "/assets/videos/YourProject/demo.mp4"`
+   - Content: Use HTML video tag if needed
+
+5. **Add code snippets** using standard Markdown code blocks:
+   ```markdown
+   ```csharp
+   void Start() {
+       Debug.Log("Hello World");
+   }
+   ```
+   ```
+
+6. **Place your assets** in the public folder:
+   - Images: `public/assets/images/projects/YourProject/`
+   - Videos: `public/assets/videos/YourProject/`
+
+### Creating New Posts
+
+The same structure applies to posts in `src/content/posts/`:
+- Copy any existing post file
+- Update frontmatter (posts use `readTime` instead of `status`)
+- Add images, videos, and code blocks the same way
+- Place assets in `public/assets/images/posts/` and `public/assets/videos/posts/`
+
+**Important**: Each project/post must have a unique `slug` value to avoid conflicts.
+
+---
+
+## 11) Regla de mantenimiento de esta guia
 
 De ahora en adelante:
 

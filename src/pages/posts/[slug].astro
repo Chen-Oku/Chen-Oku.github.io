@@ -133,6 +133,54 @@ if (!Content) {
           0 0,
           12px 20.78px;
       }
+
+      .prose pre {
+        background-color: #1e1e1e;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        overflow-x: auto;
+      }
+
+      .prose pre code {
+        color: #d4d4d4;
+        font-size: 0.875rem;
+      }
+
+      .prose code:not(pre code) {
+        background-color: #f3f4f6;
+        color: #e11d48;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.875em;
+      }
+
+      .dark .prose code:not(pre code) {
+        background-color: #374151;
+        color: #f472b6;
+      }
+
+      .prose figure {
+        margin: 1.5rem 0;
+        padding: 0;
+      }
+
+      .prose figcaption {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: #6b7280;
+        text-align: center;
+        font-style: italic;
+      }
+
+      .dark .prose figcaption {
+        color: #9ca3af;
+      }
+
+      .prose figure img,
+      .prose figure video {
+        display: block;
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body class="bg-white dark:bg-neutral-900 transition-colors duration-300">
@@ -185,6 +233,32 @@ if (!Content) {
             <p class="text-lg text-neutral-600 dark:text-neutral-400 mb-16 text-center">
               {frontmatter.description}
             </p>
+          )
+        }
+
+        {
+          frontmatter.image && (
+            <img
+              src={frontmatter.image}
+              alt={frontmatter.title || "Post image"}
+              class="w-full rounded-xl mb-8 object-cover"
+            />
+          )
+        }
+
+        {
+          frontmatter.video && (
+            <div class="w-full rounded-xl mb-8 overflow-hidden">
+              <video
+                src={frontmatter.video}
+                controls
+                class="w-full"
+                autoplay={false}
+                loop={false}
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
           )
         }
 
