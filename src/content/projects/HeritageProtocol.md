@@ -77,17 +77,19 @@ if (Physics.Raycast(ray, out RaycastHit hit))
 ```
 
 #### The Shader Graph Implementation
-The C# script passes this dynamically generated mask _DarkTex to a custom Shader Graph I developed. The shader uses the mask's values to interpolate between the dirt material and the clean surface seamlessly.
+The C# script passes this dynamically generated mask (`_DarkTex`) to a custom Shader Graph I developed. The shader uses the mask's values to interpolate between the dirt material and the clean surface seamlessly.
 
-<figure class="my-8">
-  <img src="/assets/images/projects/HeritageProtocol/HeritageSurfaceReveal.gif" alt="Surface reveal mechanic demonstration showing the dirt surface being cleaned by light" class="w-3/5 mx-auto rounded-lg shadow-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+<figure class="my-0">
+  <img src="/assets/images/projects/HeritageProtocol/HeritageSurfaceReveal.gif" alt="Surface reveal mechanic demonstration showing the dirt surface being cleaned by light" class="w-full mx-auto rounded-lg shadow-lg">
   <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Surface Reveal Mechanic: Players use light to uncover hidden information.</figcaption>
 </figure>
 
-<figure class="my-8">
-  <img src="/assets/images/projects/HeritageProtocol/ShaderDirty.jpg" alt="Shader graph for dirt material" class="w-3/5 mx-auto rounded-lg shadow-lg">
+<figure class="my-0">
+  <img src="/assets/images/projects/HeritageProtocol/ShaderDirty.jpg" alt="Shader graph for dirt material" class="w-full mx-auto rounded-lg shadow-lg">
   <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Shader Graph for Dirt Material: Custom shader for the surface reveal mechanic.</figcaption>
 </figure>
+</div>
 
 #### 2. Gameplay Programming: Events & Systems
 
@@ -129,20 +131,22 @@ private IEnumerator HideAfterDelay(float seconds)
 }
 ```
 #### The Shader Graph Setup
-The visual aspect of the fade was built in Shader Graph. It takes the _Dissolve float from the C# script and subtracts it from a generated Simple Noise node. This result is fed into the material's Alpha Clip threshold, while also generating a glowing emissive edge along the clipping border to enhance the sci-fi aesthetic.
+The visual aspect of the fade was built in Shader Graph. It takes the (`_Dissolve`) float from the C# script and subtracts it from a generated Simple Noise node. This result is fed into the material's Alpha Clip threshold, while also generating a glowing emissive edge along the clipping border to enhance the sci-fi aesthetic.
 
-<figure class="my-8">
-  <img src="/assets/images/projects/HeritageProtocol/HeritageSculptureDissolve.gif" alt="Dissolve effect demonstration showing statues fading away" class="w-3/5 mx-auto rounded-lg shadow-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+<figure class="my-0">
+  <img src="/assets/images/projects/HeritageProtocol/HeritageSculptureDissolve.gif" alt="Dissolve effect demonstration showing statues fading away" class="w-full mx-auto rounded-lg shadow-lg">
   <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Sculpture Dissolve Effect: Sci-fi aesthetic with glowing edge and clipping border.</figcaption>
 </figure>
 
-<figure class="my-8">
-  <img src="/assets/images/projects/HeritageProtocol/ShaderDissolve.jpg" alt="Shader graph for dissolve effect" class="w-3/5 mx-auto rounded-lg shadow-lg">
+<figure class="my-0">
+  <img src="/assets/images/projects/HeritageProtocol/ShaderDissolve.jpg" alt="Shader graph for dissolve effect" class="w-full mx-auto rounded-lg shadow-lg">
   <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Shader Graph for Dissolve Effect: Custom shader for the sculpture dissolve mechanic.</figcaption>
 </figure>
+</div>
 
 #### Additional Systems Engineered
-* **Beyond the shaders**: I engineered the underlying logic for the game's core progression systems:
+Beyond the shaders, I engineered the underlying logic for the game's core progression systems:
 
 * **Dynamic Minimap**: Implemented a real-time minimap UI that tracks the player's proximity to objectives and hidden items.
 
@@ -152,7 +156,29 @@ The visual aspect of the fade was built in Shader Graph. It takes the _Dissolve 
 
 
 #### 3. Mission UI & Minimap
-To guide the player without overwhelming the screen, I developed a clean, sci-fi-inspired UI. The interface includes a functional minimap positioned below the active mission objectives, providing real-time proximity alerts to search items and clear interactable prompts.
+To guide the player through the abandoned facility without breaking immersion, I developed a clean, sci-fi-inspired UI. The interface includes a functional minimap positioned below the active mission objectives, providing real-time proximity alerts and high-contrast contextual feedback.
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+  <figure class="m-0">
+    <img src="/assets/images/projects/HeritageProtocol/UIArtHeritageProtocol.jpg" alt="UI Design layout from the Heritage Protocol artbook" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video">
+    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">UI Blueprint: Designing for clarity, hierarchy, and sci-fi aesthetics.</figcaption>
+  </figure>
+  
+  <figure class="m-0">
+    <img src="/assets/images/projects/HeritageProtocol/MiniMapHeritageProtocol.jpg" alt="In-game screenshot showing the minimap positioned below the active mission objectives" class="rounded-lg shadow-md w-full h-auto object-cover aspect-video">
+    <figcaption class="text-sm text-center mt-2 text-gray-500 italic">In-Engine Implementation: Functional minimap integrated with the objective tracker.</figcaption>
+  </figure>
+</div>
+
+<figure class="my-8">
+  <img src="/assets/images/projects/HeritageProtocol/MisionHeritageProtocol.jpg" alt="Mission text box deployed with an E button prompt to start the mission" class="w-3/5 mx-auto rounded-lg shadow-md">
+  <figcaption class="text-sm text-center mt-2 text-gray-500 italic">Contextual Interactions: Clean mission logs with clear input prompts ("Press E").</figcaption>
+</figure>
+
+**Key UI/UX Features:**
+* **Contextual Prompts:** Mission triggers and interactive objects display clean button overlays (like the "Press E" prompt) only when the player interacts with them, reducing screen clutter.
+* **Dynamic Minimap:** A real-time navigation system positioned strategically below the objective list to keep the player's focus centralized.
+* **Mission Hierarchy:** Clear mission objectives that update dynamically based on the event-driven system I programmed in C#.
 
 #### Leadership & Project Management
 Managing the pipeline between the 3D modeling team, animators, and programmers required strict organization. By establishing clear documentation (GDDs), utilizing shared Google Drive hubs, and maintaining open communication, we ensured that the art assets seamlessly integrated with the technical constraints of my custom shaders and scripts.

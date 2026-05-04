@@ -171,11 +171,22 @@ const visibleGithubRepos = githubRepos
                   <span class="absolute inset-0 z-10 block w-full h-full duration-300 ease-out border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-600 group-hover:translate-x-1 group-hover:translate-y-1" />
                   <span class="relative z-30 block duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1">
                     <span class="block w-full">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        class="w-full h-auto rounded-lg aspect-[16/9] object-cover"
-                      />
+                      {project.video ? (
+                        <video
+                          src={project.video}
+                          class="w-full h-auto rounded-lg aspect-[16/9] object-cover"
+                          muted
+                          loop
+                          autoplay
+                          playsinline
+                        />
+                      ) : (
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          class="w-full h-auto rounded-lg aspect-[16/9] object-cover"
+                        />
+                      )}
                     </span>
                     <span class="block w-full px-1 mt-5 mb-1 sm:mt-3">
                       <span class="flex items-center mb-0 text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">
