@@ -7,6 +7,7 @@ image: "/assets/images/projects/project2.jpg"
 slug: "ProjectEx"
 demoUrl: ""
 repoUrl: "https://github.com/Chen-Oku/Checkpoint4"
+category: "Personal"
 tags:
   - Unity
   - C#

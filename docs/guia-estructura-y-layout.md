@@ -691,7 +691,146 @@ Para ajustar el comportamiento:
 
 ---
 
-## 16) Regla de mantenimiento de esta guía
+## 16) Sistema de filtros en la página de Proyectos
+
+### Descripción general
+
+La página de proyectos (`src/pages/projects.astro`) cuenta con un sistema de filtrado doble:
+
+1. **Filtros por categoría**: Botones principales para filtrar por tipo de proyecto (All, Personal, GameDev)
+2. **Filtros por tags**: Chips seleccionables para filtrar por roles o tecnologías (Technical Art, Team Lead, UI/UX, etc.)
+
+### Cómo funciona el sistema
+
+**1. Categorías (Nivel principal)**
+- Los botones de categoría están ubicados debajo de la descripción de la sección
+- "All" muestra todos los proyectos sin importar la categoría
+- Las categorías específicas (Personal, GameDev) filtran por el campo `category` del frontmatter
+- Solo se puede seleccionar una categoría a la vez
+
+**2. Tags (Nivel secundario)**
+- Los tags se muestran como chips redondeados debajo de los botones de categoría
+- Se pueden seleccionar múltiples tags simultáneamente
+- Los proyectos deben tener TODOS los tags seleccionados para mostrarse (lógica AND)
+- Botón "Clear Tags" para limpiar la selección de tags
+
+**3. Combinación de filtros**
+- Los filtros de categoría y tags trabajan juntos
+- Un proyecto debe coincidir con la categoría seleccionada Y con todos los tags seleccionados
+- Si no hay tags seleccionados, solo se filtra por categoría
+
+### Cómo agregar categorías y tags a proyectos
+
+**1. Agregar categoría al frontmatter:**
+```yaml
+---
+title: "Mi Proyecto"
+description: "Descripción del proyecto"
+category: "GameDev"  # O "Personal", o cualquier otra categoría
+tags:
+  - Unity
+  - Technical Art
+  - Team Lead
+---
+```
+
+**2. Valores de categoría válidos:**
+- `GameDev`: Proyectos de desarrollo de juegos
+- `Personal`: Proyectos personales
+- Cualquier otro valor que definas (se mostrará automáticamente en los botones)
+
+**3. Tags recomendados por rol:**
+- `Technical Art`: Proyectos donde fuiste Technical Artist
+- `Team Lead`: Proyectos donde fuiste líder de equipo
+- `Game Dev`: Desarrollo general de juegos
+- `UI/UX`: Diseño y desarrollo de interfaces
+- `C#`: Programación en C#
+- `Unity`: Desarrollo en Unity
+- `Shader Graph`: Trabajo con shaders visuales
+- `VFX`: Efectos visuales y partículas
+
+### Estructura técnica
+
+**1. En `src/utils/getProjects.ts`:**
+- El campo `category` se agrega a la interfaz `Project`
+- Se extrae del frontmatter y se incluye en el objeto del proyecto
+
+**2. En `src/pages/projects.astro`:**
+- Se extraen categorías únicas: `const allCategories = ["All", ...Array.from(new Set(allProjects.map(p => p.category).filter(Boolean)))]`
+- Se extraen tags únicos: `const allTags = Array.from(new Set(allProjects.flatMap(p => p.tags || []))).sort()`
+- Los botones de categoría se generan dinámicamente con el atributo `data-category-filter`
+- Los chips de tags se generan dinámicamente con el atributo `data-tag-filter`
+- Cada tarjeta de proyecto tiene atributos `data-category` y `data-tags` para el filtrado
+
+**3. Lógica JavaScript de filtrado:**
+```javascript
+// Estado actual
+let currentCategory = "All";
+let currentTags = new Set<string>();
+
+// Función principal de filtrado
+function filterProjects() {
+  projectCards.forEach((card) => {
+    const cardCategory = card.getAttribute("data-category") || "Uncategorized";
+    const cardTags = (card.getAttribute("data-tags") || "").split(",").map(t => t.trim()).filter(t => t);
+
+    const categoryMatch = currentCategory === "All" || cardCategory === currentCategory;
+    const tagsMatch = currentTags.size === 0 || [...currentTags].every((tag: string) => cardTags.includes(tag));
+
+    if (categoryMatch && tagsMatch) {
+      htmlCard.style.display = "flex";
+      htmlCard.style.opacity = "1";
+    } else {
+      htmlCard.style.display = "none";
+      htmlCard.style.opacity = "0";
+    }
+  });
+}
+```
+
+### Visualización de tags en las tarjetas
+
+Las tarjetas de proyecto muestran hasta 4 tags:
+- Los tags se muestran como chips pequeños debajo de la descripción
+- Si hay más de 4 tags, se muestra un contador (ej: "+2")
+- Los tags tienen estilo consistente con el diseño del sitio
+
+### Estilos de los filtros
+
+**Botones de categoría:**
+- Estado activo: Fondo oscuro (`bg-neutral-900` en claro, `bg-neutral-100` en oscuro)
+- Estado inactivo: Fondo claro con borde (`bg-white` o `dark:bg-neutral-800`)
+- Transiciones suaves de 200ms
+
+**Chips de tags:**
+- Forma redondeada (`rounded-full`)
+- Tamaño pequeño (`text-xs`)
+- Estado seleccionado: Fondo oscuro igual que botones de categoría
+- Estado no seleccionado: Fondo claro con borde
+
+### Cómo extender el sistema
+
+**Agregar nuevas categorías:**
+1. Simplemente agrega el valor de `category` al frontmatter de un proyecto
+2. El botón se generará automáticamente en la página
+
+**Agregar nuevos tags:**
+1. Agrega el tag al array `tags` en el frontmatter
+2. El chip se generará automáticamente
+
+**Personalizar estilos:**
+- Edita las clases Tailwind en los botones y chips en `src/pages/projects.astro`
+- Los patrones de color siguen el esquema neutral del sitio
+
+### Comportamiento responsivo
+
+- Los botones de categoría y chips de tags usan `flex-wrap` para adaptarse a pantallas pequeñas
+- En móviles, los filtros se apilan verticalmente según el espacio disponible
+- Las tarjetas de proyecto mantienen su grid responsive (1 columna en móvil, 2 en tablet, 3 en desktop)
+
+---
+
+## 17) Regla de mantenimiento de esta guía
 
 De ahora en adelante:
 

@@ -7,6 +7,7 @@ video: "/assets/images/projects/VFXPowerUps/PowerUps.mp4"
 slug: "VFX-Powerups"
 demoUrl: ""
 repoUrl: "https://github.com/Chen-Oku/Checkpoint4"
+category: "Personal"
 tags:
   - Unity
   - C#

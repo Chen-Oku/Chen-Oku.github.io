@@ -19,7 +19,7 @@ const githubRepos = githubUsername
 const repoOverrides = projectsContent.github?.repoOverrides || {};
 const visibleGithubRepos = githubRepos
   .map((repo) => {
-    const override = repoOverrides[repo.name] || {};
+    const override = (repoOverrides as Record<string, any>)[repo.name] || {};
     return {
       ...repo,
       displayTitle: override.title || repo.name,
@@ -29,6 +29,10 @@ const visibleGithubRepos = githubRepos
     };
   })
   .filter((repo) => !repo.hide);
+
+// Extract unique categories and tags for filters
+const allCategories = ["All", ...Array.from(new Set(allProjects.map(p => p.category).filter(Boolean)))];
+const allTags = Array.from(new Set(allProjects.flatMap(p => p.tags || []))).sort();
 ---
 
 <html lang="en">
@@ -72,6 +76,133 @@ const visibleGithubRepos = githubRepos
               }
             }
           });
+
+        // Project filtering system
+        let currentCategory = "GameDev";
+        let currentTags = new Set<string>();
+
+        const projectCards = document.querySelectorAll(".project-card");
+        const categoryButtons = document.querySelectorAll("[data-category-filter]");
+        const tagButtons = document.querySelectorAll("[data-tag-filter]");
+        const clearTagsButton = document.getElementById("clear-tags");
+        const toggleTagsButton = document.getElementById("toggle-tags");
+        const tagsContainer = document.getElementById("tags-container");
+
+        // Initialize category button states (GameDev active by default)
+        categoryButtons.forEach((btn) => {
+          const btnCategory = btn.getAttribute("data-category-filter");
+          if (btnCategory === "GameDev") {
+            btn.classList.remove("bg-white", "dark:bg-neutral-800", "text-neutral-700", "dark:text-neutral-300", "border-neutral-300", "dark:border-neutral-600");
+            btn.classList.add("bg-neutral-900", "dark:bg-neutral-100", "text-white", "dark:text-neutral-900", "border-neutral-900", "dark:border-neutral-100");
+          } else {
+            btn.classList.remove("bg-neutral-900", "dark:bg-neutral-100", "text-white", "dark:text-neutral-900", "border-neutral-900", "dark:border-neutral-100");
+            btn.classList.add("bg-white", "dark:bg-neutral-800", "text-neutral-700", "dark:text-neutral-300", "border-neutral-300", "dark:border-neutral-600");
+          }
+        });
+
+        // Apply initial filter
+        filterProjects();
+
+        // Show more/less tags functionality
+        const MAX_VISIBLE_TAGS = 6;
+        let tagsExpanded = false;
+
+        function updateTagsVisibility() {
+          if (!tagsContainer || !toggleTagsButton) return;
+          const allTagButtons = Array.from(tagsContainer.querySelectorAll(".filter-tag"));
+          const hiddenCount = allTagButtons.length - MAX_VISIBLE_TAGS;
+
+          if (tagsExpanded) {
+            allTagButtons.forEach(btn => (btn as HTMLElement).style.display = "inline-flex");
+            toggleTagsButton.textContent = "Show less";
+          } else {
+            allTagButtons.forEach((btn, index) => {
+              (btn as HTMLElement).style.display = index < MAX_VISIBLE_TAGS ? "inline-flex" : "none";
+            });
+            toggleTagsButton.textContent = hiddenCount > 0 ? `Show more (+${hiddenCount})` : "Show more";
+          }
+        }
+
+        // Initialize tags visibility
+        updateTagsVisibility();
+
+        // Toggle tags button handler
+        toggleTagsButton?.addEventListener("click", () => {
+          tagsExpanded = !tagsExpanded;
+          updateTagsVisibility();
+        });
+
+        // Category filter handlers
+        categoryButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const category = button.getAttribute("data-category-filter");
+            if (!category) return;
+
+            categoryButtons.forEach((btn) => {
+              const btnCategory = btn.getAttribute("data-category-filter");
+              if (btnCategory === category) {
+                btn.classList.remove("bg-white", "dark:bg-neutral-800", "text-neutral-700", "dark:text-neutral-300", "border-neutral-300", "dark:border-neutral-600");
+                btn.classList.add("bg-neutral-900", "dark:bg-neutral-100", "text-white", "dark:text-neutral-900", "border-neutral-900", "dark:border-neutral-100");
+              } else {
+                btn.classList.remove("bg-neutral-900", "dark:bg-neutral-100", "text-white", "dark:text-neutral-900", "border-neutral-900", "dark:border-neutral-100");
+                btn.classList.add("bg-white", "dark:bg-neutral-800", "text-neutral-700", "dark:text-neutral-300", "border-neutral-300", "dark:border-neutral-600");
+              }
+            });
+
+            currentCategory = category;
+            filterProjects();
+          });
+        });
+
+        // Tag filter handlers
+        tagButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const tag = button.getAttribute("data-tag-filter");
+            if (!tag) return;
+
+            if (currentTags.has(tag)) {
+              currentTags.delete(tag);
+              button.classList.remove("bg-neutral-900", "dark:bg-neutral-100", "text-white", "dark:text-neutral-900", "border-neutral-900", "dark:border-neutral-100");
+              button.classList.add("bg-white", "dark:bg-neutral-800", "text-neutral-600", "dark:text-neutral-400", "border-neutral-300", "dark:border-neutral-600");
+            } else {
+              currentTags.add(tag);
+              button.classList.remove("bg-white", "dark:bg-neutral-800", "text-neutral-600", "dark:text-neutral-400", "border-neutral-300", "dark:border-neutral-600");
+              button.classList.add("bg-neutral-900", "dark:bg-neutral-100", "text-white", "dark:text-neutral-900", "border-neutral-900", "dark:border-neutral-100");
+            }
+
+            filterProjects();
+          });
+        });
+
+        // Clear tags handler
+        clearTagsButton?.addEventListener("click", () => {
+          currentTags.clear();
+          tagButtons.forEach((button) => {
+            button.classList.remove("bg-neutral-900", "dark:bg-neutral-100", "text-white", "dark:text-neutral-900", "border-neutral-900", "dark:border-neutral-100");
+            button.classList.add("bg-white", "dark:bg-neutral-800", "text-neutral-600", "dark:text-neutral-400", "border-neutral-300", "dark:border-neutral-600");
+          });
+          filterProjects();
+        });
+
+        // Main filtering function
+        function filterProjects() {
+          projectCards.forEach((card) => {
+            const cardCategory = card.getAttribute("data-category") || "Uncategorized";
+            const cardTags = (card.getAttribute("data-tags") || "").split(",").map(t => t.trim()).filter(t => t);
+
+            const categoryMatch = currentCategory === "All" || cardCategory === currentCategory;
+            const tagsMatch = currentTags.size === 0 || [...currentTags].every((tag: string) => cardTags.includes(tag));
+
+            const htmlCard = card as HTMLElement;
+            if (categoryMatch && tagsMatch) {
+              htmlCard.style.display = "flex";
+              htmlCard.style.opacity = "1";
+            } else {
+              htmlCard.style.display = "none";
+              htmlCard.style.opacity = "0";
+            }
+          });
+        }
       });
     </script>
     <style>
@@ -158,14 +289,68 @@ const visibleGithubRepos = githubRepos
             }
           </div>
 
+          <!-- Category Filter Buttons -->
+          <div class="flex flex-wrap gap-2 my-6">
+            {allCategories.map((category) => (
+              <button
+                data-category-filter={category}
+                class="filter-btn px-4 py-2 text-sm font-medium rounded-lg border transition-all duration-200
+                  {category === 'All'
+                    ? 'bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 border-neutral-900 dark:border-neutral-100'
+                    : 'bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border-neutral-300 dark:border-neutral-600 hover:border-neutral-900 dark:hover:border-neutral-100'
+                  }"
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          <!-- Tag Filter Chips -->
+          {allTags.length > 0 && (
+            <div class="flex flex-wrap gap-2 my-4">
+              <span class="text-sm text-neutral-500 dark:text-neutral-400 py-2">Filter by role:</span>
+              <div id="tags-container" class="flex flex-wrap gap-2">
+                {allTags.map((tag) => (
+                  <button
+                    data-tag-filter={tag}
+                    class="filter-tag px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-200
+                      bg-white dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 border-neutral-300 dark:border-neutral-600
+                      hover:border-neutral-900 dark:hover:border-neutral-100 hover:text-neutral-900 dark:hover:text-neutral-100"
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+              <button
+                id="toggle-tags"
+                class="px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-200
+                  bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 border-neutral-300 dark:border-neutral-600
+                  hover:border-neutral-900 dark:hover:border-neutral-100 hover:text-neutral-900 dark:hover:text-neutral-100"
+              >
+                Show more
+              </button>
+              <button
+                id="clear-tags"
+                class="px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-200
+                  bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400 border-neutral-300 dark:border-neutral-600
+                  hover:border-neutral-900 dark:hover:border-neutral-100 hover:text-neutral-900 dark:hover:text-neutral-100"
+              >
+                Clear Tags
+              </button>
+            </div>
+          )}
+
           <div
+            id="projects-grid"
             class="z-50 grid items-stretch w-full grid-cols-1 my-8 gap-7 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3"
           >
             {
               allProjects.map((project) => (
                 <a
                   href={project.href}
-                  class="relative flex flex-col items-stretch duration-300 ease-out p-4 sm:p-3 md:p-7 group rounded-2xl"
+                  data-category={project.category || "Uncategorized"}
+                  data-tags={(project.tags || []).join(",")}
+                  class="project-card relative flex flex-col items-stretch duration-300 ease-out p-4 sm:p-3 md:p-7 group rounded-2xl"
                 >
                   <span class="absolute inset-0 z-20 block w-full h-full duration-300 ease-out bg-transparent border border-transparent border-dashed group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:border group-hover:border-neutral-300 dark:group-hover:border-neutral-600 group-hover:border-dashed rounded-2xl group-hover:bg-white dark:group-hover:bg-neutral-950" />
                   <span class="absolute inset-0 z-10 block w-full h-full duration-300 ease-out border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-600 group-hover:translate-x-1 group-hover:translate-y-1" />
@@ -228,6 +413,18 @@ const visibleGithubRepos = githubRepos
                       <span class="text-sm text-neutral-600 dark:text-neutral-400 block line-clamp-2">
                         {project.description}
                       </span>
+                      <div class="flex flex-wrap gap-1.5 mt-3">
+                        {(project.tags || []).slice(0, 4).map((tag) => (
+                          <span class="text-[10px] px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700">
+                            {tag}
+                          </span>
+                        ))}
+                        {(project.tags || []).length > 4 && (
+                          <span class="text-[10px] px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700">
+                            +{project.tags.length - 4}
+                          </span>
+                        )}
+                      </div>
                     </span>
                   </span>
                 </a>

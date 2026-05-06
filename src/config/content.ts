@@ -150,11 +150,11 @@ export const projectsContent = {
     title: "Projects - Your Portfolio",
     description: "Showcase of my best work and projects",
   },
-  title: "Our Projects",
+  title: "My Work & Technical Case Studies",
+  
   descriptionParagraphs: [
-    "Here you can showcase your best work.",
-    "Each project should include a brief description, the technologies used, and any notable achievements.",
-    "This helps potential clients or employers understand your capabilities.",
+    "Building immersive interactive experiences requires more than just beautiful art or clean code, it demands both working in harmony. Here you will find a showcase of games, visual effects, and technical systems I've developed.",
+    "Feel free to filter by tags to dive into the creative process behind each project.",
   ],
   github: {
     username: "Chen-Oku",

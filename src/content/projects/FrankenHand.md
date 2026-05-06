@@ -7,6 +7,7 @@ image: "/assets/images/projects/FrankenHand/FrankenHand.jpg"
 slug: "FrankenHand"
 demoUrl: "https://chenoku.itch.io/frankenhand"
 repoUrl: "https://github.com/Chen-Oku/FrankenHand"
+category: "GameDev"
 tags:
   - Unity
   - Technical Art

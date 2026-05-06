@@ -7,12 +7,14 @@ image: "/assets/images/projects/HeritageProtocol/HeritageProtocol.jpg"
 slug: "HeritageProtocol"
 demoUrl: "https://chenoku.itch.io/heritageprotocol"
 repoUrl: "https://github.com/Chen-Oku/HeritageProtocol/tree/M-Branch"
+category: "GameDev"
 tags:
   - Unity
   - Technical Art
   - Team Lead
   - C#
   - UI/UX
+  - VFX
 ---
 
 # HeritageProtocol
